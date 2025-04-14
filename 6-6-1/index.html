@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha384-bPV3mA2eo3edoq56VzcPBmG1N1QVUfjYMxVIJPPzyFJyFZ8GFfN7Npt06Zr23qts" crossorigin="anonymous"></script>
+        <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?version=4.8.0&features=Promise%2CString.prototype.includes%2CCustomEvent%2CArray.prototype.includes%2CArray.prototype.find%2CObject.assign%2CObject.values%2CObject.entries%2CArray.from%2CSet%2CArray.prototype.findIndex%2Cfetch"></script>
+<script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/javascript-canvas-to-blob/3.15.0/js/canvas-to-blob.min.js"></script>
+        <script>
+// This is where we initialise any global variables, namespaced in "opensdg".
+var opensdg = {
+
+  // A base URL for asynchronous calls to SDG data.
+  remoteDataBaseUrl: 'https://sdggif-data-canada-oddcmi-donnee.github.io/canada-gif-production-data/en',
+
+  chartConfigAlterations: [],
+  // A hook which can be used to modify the configuration for Chart.js.
+  chartConfigAlter: function(callback) {
+    this.chartConfigAlterations.push(callback);
+  },
+
+  tableConfigAlterations: [],
+  // A hook which can be used to modify the configuration for Datatables.
+  tableConfigAlter: function(callback) {
+    this.tableConfigAlterations.push(callback);
+  },
+
+  // A hook which can be replaced to alter whether/how the values that are
+  // displayed on indicator tables/graphs get rounded. A "context" parameter
+  // is also passed which contains additional information.
+  dataRounding: function(value, context) {
+    // Alterations go here.
+    return value;
+  },
+
+  // A hook which can be used to alter the data before it is displayed on charts/tables.
+  dataDisplayAlterations: [],
+  dataDisplayAlter: function(callback) {
+    this.dataDisplayAlterations.push(callback);
+  },
+
+  // Disaggregations which should be ignored on indicator pages.
+  ignoredDisaggregations: null,
+
+  language: 'en',
+
+  mapColors: {
+    "default": [
+        "#c4e1c6",
+        "#b0d1b3",
+        "#9bc2a1",
+        "#87b28f",
+        "#74a37c",
+        "#60946b",
+        "#4d8559",
+        "#3a7747",
+        "#276836"
+    ]
+},
+};
+
+</script>
+
+        <script>
+// JavaScript container for translation data.
+var translations = {
+  //Javascript version of the "t" filter from jekyll-open-sdg-plugins.
+  t: function(key) {
+
+    if (!key || typeof key !== 'string') {
+      return '';
+    }
+
+    // The majority of uses of this function are to translate disaggregation
+    // data. To spare data providers of needing to enter "data." in front of
+    // their disaggregation data, we specifically look for that here.
+    if (typeof this.data === 'object' && this.data !== null && this.data[key]) {
+      return this.data[key];
+    }
+
+    var originalKey = key;
+    var drilled = this;
+    var levelsDrilled = 0;
+    var levels = key.split('.');
+
+    for (var level in levels) {
+      // If we have drilled down to soon, abort.
+      if (typeof drilled !== 'object') {
+        break;
+      }
+
+      if (levels[level] in drilled) {
+        drilled = drilled[levels[level]];
+        levelsDrilled += 1;
+      }
+    }
+
+    // If we didn't drill the right number of levels, return the original string.
+    if (levels.length != levelsDrilled) {
+      return originalKey;
+    }
+
+    // Otherwise we must have drilled all the way.
+    return drilled;
+  },
+};
+</script>
+
+        <!-- Basic Page Needs
+        ================================================== -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"><!-- Mobile Specific Metas
+        ================================================== -->
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Title and meta description
+        ================================================== -->
+
+        
+    <title>
+        
+        Indicator 6.6.1 -
+        
+        Change in the extent of water-related ecosystems over time - Indicators For The Sustainable Development Goals
+    </title>
+
+
+
+        
+
+        <!--[if IE 9]>
+        <script src="/assets/js/lib/classList.js"></script>
+        <![endif]-->
+
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png">
+<link rel="icon" type="image/x-icon" href="/assets/img/favicons/favicon.ico" />
+
+        
+
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link res="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
+        <link rel="stylesheet" href="/assets/css/style.css?v=20250414190427">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+        <link rel="stylesheet" href="https://cdn.rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.control.min.css"  crossorigin=""/>
+        <link rel="stylesheet" href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css'  crossorigin=""/>
+        <link rel="stylesheet" href="https://bowercdn.net/c/leaflet.zoomhome-latest/dist/leaflet.zoomhome.css"  crossorigin=""/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.css" crossorigin="">
+        <link rel="stylesheet" href="https://cdn.kiprotect.com/klaro/v0.7/klaro.min.css" crossorigin=""/>
+        
+
+        
+
+
+        <!--[if IE]>
+        <link rel="stylesheet" href="/assets/css/ie.css">
+        <![endif]-->
+
+        
+
+    </head>
+<body class="language-en
+layout-indicator
+">
+<!-- <div class="container"> -->
+
+<script>translations['header'] = {"alpha":"Beta","default_contrast":"Default contrast","disable_high_contrast":"Disable high contrast","disclaimer":"This is a website in development. We welcome your <a href=\"mailto:statcan.sdg-odd.statcan@statcan.gc.ca\">feedback</a>.","enable_high_contrast":"Enable high contrast","hide_menu":"Hide navigation menu","high_contrast":"High contrast","internet_explorer_message":"We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.","internet_explorer_message_title":"This internet browser is no longer supported","logo_title":"Go to homepage","show_menu":"Show navigation menu","skip_link":"Skip to main content","tag_line":"17 Goals to Transform our World","toggle_menu":"Menu toggle. Click to expand or collapse the menu.","toggle_search":"Search toggle. Click to expand or collapse the search bar."};</script>
+
+<a class="sr-only-focusable" id="skiplink" href="#main-content" tabindex="0">Skip to main content</a>
+<div class="container internet-explorer-message">
+    <h2 class="internet-explorer-message-title">This internet browser is no longer supported</h2>
+    <p class="internet-explorer-message-body">We have detected that you are using Internet Explorer to visit this website. Internet Explorer is now being phased out by Microsoft. As a result, this website no longer supports any version of Internet Explorer. Some features on this site will not work. You should use a modern browser such as Edge, Chrome, Firefox, or Safari. If you have difficulty installing or accessing a different browser, please contact your IT support team.</p>
+</div>
+<div id="disclaimer">
+    
+<div class="container">
+  <div class="disclaimer-alert">
+    <strong class="phase-tag">Beta</strong>
+    
+    This is a website in development. We welcome your <a href="mailto:statcan.sdg-odd.statcan@statcan.gc.ca">feedback</a>.
+    
+  </div>
+</div>
+
+</div>
+
+<header role="banner" class="">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light flex-wrap align-items-start">
+            <a class="navbar-brand" href="/" id="home" aria-label="Go to homepage" title="Go to homepage">
+    <img src="/assets/img/EN_SDG_logo_transparent.png" alt="Go to home page" />
+</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Show navigation menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="d-flex flex-wrap w-100 justify-content-between">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav" id="menu"><li class="nav-item ">
+    <a class="nav-link" href="/goals">Goals</a>
+</li><li class="nav-item ">
+    <a class="nav-link" href="/reporting-status">Reporting Status</a>
+</li><li class="nav-item ">
+    <a class="nav-link" href="/about">About</a>
+</li><li class="nav-item ">
+    <a class="nav-link" href="/faq">FAQ</a>
+</li><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="dropdown-menu-more-info" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    More Information
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown-menu-more-info"><li class=" ">
+    <a class="dropdown-item" href="/related-products">Related Products</a>
+</li></ul>
+            </li></ul>
+    
+                </div>
+                <div class="header-search-bar">
+                    <form class="align-self-lg-end" id="search" action="/search/">
+    <div class="input-group">
+        <label class="visually-hidden" for="indicator_search">Search</label>
+        <input class="form-control" type="search" name="q" id="indicator_search" title="Search">
+        <span class="input-group-append">
+            <button class="btn btn-outline-secondary ms-n5" aria-label="Site search" id="search-btn" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+</form>
+
+                </div>
+                <div class="header-toggles d-flex">
+
+
+
+
+
+  <div class="language-toggle-container">
+  
+  <div class="btn-group language-toggle-dropdown  dropdown">
+    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="fa fa-globe"></i>
+      English
+    </button>
+    <ul class="dropdown-menu"><li>
+            <a class="dropdown-item" href="/fr/6-6-1/">
+              Français
+            </a>
+          </li></ul>
+  </div>
+</div>
+
+
+
+                    <span class="no-js-language-toggle"><div class="language-toggle-container d-flex">
+    <i class="fa fa-globe language-toggle-globe-links"></i>
+    <ul class="language-toggle-links list-unstyled list-inline"><li class="language-option-fr list-inline-item">
+            <a class="language-toggle-link" href="/fr/6-6-1/">
+                Français
+            </a>
+        </li></ul>
+</div></span><a title="Enable high contrast" aria-label="Enable high contrast"
+    data-contrast-switch-to="" role="button" href="javascript:void(0)" data-on="click"
+data-event-category="Accessibility"
+data-event-action="Change contrast setting"
+data-event-label="high"
+>A</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<div id="top" tabindex=-1></div>
+
+
+
+<script type="text/template" id="item_template">
+  <% _.each(fields, function(fieldItem) { %>
+    <div class="variable-selector
+      <% if(allowedFields.indexOf(fieldItem.field) == -1) { %> disallowed <% }%>
+      <% if (typeof childFields !== 'undefined' && childFields.indexOf(fieldItem.field) !== -1) { %> child <% }%>
+      "
+      data-field="<%=fieldItem.field%>"
+    >
+      <button class='accessBtn' tabindex='0' aria-expanded='false'
+        <% if(allowedFields.indexOf(fieldItem.field) == -1) { %>
+        aria-describedby='variable-hint-<%=fieldItem.field.replace(/ /g, '-')%>'
+        <% }%>
+      >
+        <% if(allowedFields.indexOf(fieldItem.field) == -1) { %><h6><% } else { %><h5><% } %>
+          <span aria-hidden="true"><%=translations.t(fieldItem.label)%><i class="fa fa-chevron-down"></i></span>
+          <span class="sr-only">Show sub-categories: <%=translations.t(fieldItem.label)%></span>
+        <% if(allowedFields.indexOf(fieldItem.field) == -1) { %></h6><% } else { %></h5><% } %>
+      </button>
+      <div class="variable-options">
+        <fieldset>
+          <legend class="sr-only">Sub-categories - <%=translations.t(fieldItem.field)%></legend>
+          <div>
+            <button data-type="select">Select all</button>
+            <button data-type="clear">Clear all</button>
+          </div>
+          <% _.each(fieldItem.values, function(item) { %>
+            <label>
+              <input type="checkbox" <%=item.checked ? 'checked' : ''%> value="<%=item.value%>" data-field="<%=fieldItem.field%>" /><%=translations.t(item.value)%>
+            </label>
+          <% }); %>
+        </fieldset>
+      </div>
+
+      <% if(allowedFields.indexOf(fieldItem.field) == -1) { %>
+        <div class="variable-hint" id="variable-hint-<%=fieldItem.field.replace(/ /g, '-')%>">Available when '<%= translations.t(_.find(edges, { To: fieldItem.field }).From) %>' is selected
+        </div>
+        <div class="no-data-hint" id="no-data-hint-<%=fieldItem.field.replace(/ /g, '-')%>">
+          No options available because of filters above
+        </div>
+      <% }%>
+
+    </div>
+  <% }); %>
+</script>
+
+<script type="text/template" id="units_template">
+  
+  <% if(units.length > 1) { %>
+  
+    <h4>Unit of Measurement</h4>
+    <fieldset>
+      <legend class="sr-only">Unit of Measurement</legend>
+      <% _.each(units, function(unitsItem, index) { %>
+        <% var checked = (selectedUnit) ? (selectedUnit==unitsItem) : (index==0); %>
+        <label><input type="radio" name="unit" value="<%=unitsItem%>" tabindex=0 <%=checked ? 'checked' : ''%> /> <%=translations.t(unitsItem)%></label>
+      <% }); %>
+    </fieldset>
+  
+  <% } %>
+  
+</script>
+
+<script type="text/template" id="series_template">
+  
+  <% if(serieses.length > 1) { %>
+  
+    <h4>Series</h4>
+    <fieldset>
+      <legend class="sr-only">Series</legend>
+      <% _.each(serieses, function(seriesItem, index) { %>
+        <% var isProxy = (proxySerieses.includes(seriesItem)) %>
+        <% var checked = (selectedSeries) ? (selectedSeries==seriesItem) : (index==0); %>
+        <label><input type="radio" name="series" value="<%=seriesItem%>" tabindex=0 <%=checked ? 'checked' : ''%> /> <%=translations.t(seriesItem)%> <%=isProxy ? proxyPill : ''%></label>
+      <% }); %>
+    </fieldset>
+  
+  <% } %>
+  
+</script>
+
+<script>translations['indicator'] = {"annotation_2030_target":"Target","annotation_series_break":"Series break","announce_data_added":"Chart and table updated to include data.","announce_data_not_available":"Chart and table shows no data.","announce_data_removed":"Chart and table updated to exclude data.","announce_series_switched":"Chart and table updated to show a different series.","announce_unit_switched":"Chart and table updated to show a different unit.","apply":"Apply","cancel":"Cancel","change_breakdowns":"Change breakdowns","chart":"Chart","chart_annotation":"Chart annotation","clear_all":"Clear all","clear_selections":"Clear selections","data_keyboard_navigation":"Press enter to browse data points with left and right arrow keys.","data_not_available":"This data is not available. Please choose alternative data to display.","data_tabular_alternative":"For tabular data alternative see Table tab.","dataset_size_warning":"There are too many datasets to show on the chart. Not all will be shown until you remove some selections.","download_chart":"Download Chart Data (CSV)","download_chart_image":"Download Chart Image","download_chart_image_title":"Download chart as image","download_csv":"Download CSV","download_csv_title":"Download as CSV","download_geojson":"Download GeoJSON","download_geojson_title":"Download as GeoJSON","download_headline":"Download Headline CSV","download_headline_title":"Download headline data as CSV","download_source":"Download All Data (CSV)","download_source_for_disaggregations":"Download source data for disaggregations (.csv)","download_source_sdmx":"Download Source SDMX","download_source_sdmx_title":"Download source data as SDMX","download_source_title":"Download source data as CSV","download_table":"Download Table Data (CSV)","edit":"Edit","edit_configuration":"Edit Configuration","edit_data":"Edit Data","edit_metadata":"Edit Metadata","empty_metadata_placeholder":"Not available for this indicator","empty_metadata_placeholder_sources":"Not available for this source","footnote":"Note","geographical_area":"Geographical Area","global_metadata":"Global Metadata","global_metadata_blurb":"This table provides information on metadata for SDG indicators as defined by the UN Statistical Commission. <a href=\"https://unstats.un.org/sdgs/metadata/\">Complete global metadata</a> is provided by the UN Statistics Division.","headline_data":"Headline data","legend_help":"Click on the legend to remove individual lines from the chart.","loading":"Loading","loading_map":"Loading map","map":"Map","map_fullscreen":"View map fullscreen","map_fullscreen_exit":"Exit fullscreen map","map_search":"Search","map_search_cancel":"Clear map search","map_search_hide":"Hide search","map_search_show":"Show search","map_slider_back":"View map data for previous time period","map_slider_forward":"View map data for next time period","map_slider_keyboard":"View map data throughout time period by using left and right arrow keys","map_slider_mouse":"Navigate map data by time period","map_year_slider":"Year slider","map_zoom_home":"Reset to default map zoom","map_zoom_in":"Zoom in on map","map_zoom_out":"Zoom out on map","national_metadata":"National Metadata","national_metadata_blurb":"The table below contains more information regarding the indicator.","next":"Next indicator","no_data_hint":"No options available because of filters above","no_headline_data":"No headline data available","note":"note","plot_legend_description":"Plot legend: list of lines included in chart","previous":"Previous indicator","proxy":"Proxy","proxy_description":"This indicator contains some alternative data to those specified by the United Nations (UN). This indicator is the most suitable match currently available.","select_all":"Select all","series":"Series","series_help":"Choose categories from the dropdowns below to see different breakdowns of the data. Some will not be available until a higher level is chosen.","source":"Source","sources":"Sources","status":"Indicator status","sub_categories":"Sub-categories","sub_categories_show":"Show sub-categories:","table":"Table","table_column_sort":"Click to sort by this column","tags":"Tags","total":"Total","unit":"Unit","unit_of_measurement":"Unit of Measurement","units_type":"Units type","variable_hint":"Available when '%field' is selected","view_indicator_list":"View this goal's indicator list"};</script>
+
+<script>translations['data'] = {"$1,001 or more":"$1,001 or more","$100 or less":"$100 or less","$101 to $200":"$101 to $200","$201 to $300":"$201 to $300","$301 to $500":"$301 to $500","$501 to $1,000":"$501 to $1,000","1 to 14 years":"1 to 14 years","1 to 4 employees":"1 to 4 employees","1 to 4 years":"1 to 4 years","1-9 employees":"1-9 employees","10 to 14 years":"10 to 14 years","10-19 employees":"10-19 employees","100 to 499 employees":"100 to 499 employees","1000 metres from high-capacity public transit stops only":"1000 metres from high-capacity public transit stops only","12 to 15 years":"12 to 15 years","12 to 17 years":"12 to 17 years","15 to 19 years":"15 to 19 years","15 to 24":"15 to 24","15 to 24 year old women":"15 to 24 year old women","15 to 24 years":"15 to 24 years","15 to 64 years":"15 to 64 years","15 years and over":"15 years and over","15-19 years-old":"15-19 years-old","16 and 17 years":"16 and 17 years","16 to 24 years":"16 to 24 years","18 to 24 years":"18 to 24 years","18 to 34 years":"18 to 34 years","18 to 64 years":"18 to 64 years","2 or below":"2 or below","20 to 24 years":"20 to 24 years","20 to 99 employees":"20 to 99 employees","20-24 years-old":"20-24 years-old","20-49 employees":"20-49 employees","25 to 29 years":"25 to 29 years","25 to 34 years":"25 to 34 years","25 to 44 years":"25 to 44 years","25 to 54 years":"25 to 54 years","25 to 64 years":"25 to 64 years","25 years and over":"25 years and over","25+ years-old":"25+ years-old","25-44 years-old":"25-44 years-old","250 employees and more":"250 employees and more","3 or above":"3 or above","30 to 34 years":"30 to 34 years","30 to 39 years old":"30 to 39 years old","35 to 39 years":"35 to 39 years","35 to 44 years":"35 to 44 years","35 to 49 years":"35 to 49 years","35 to 54 years":"35 to 54 years","40 to 44 years":"40 to 44 years","40 to 49 years old":"40 to 49 years old","45 to 49 years":"45 to 49 years","45 to 54 years":"45 to 54 years","45 to 64 years":"45 to 64 years","45 years and over":"45 years and over","45+ years-old":"45+ years-old","5 to 19 employees":"5 to 19 employees","5 to 9 years":"5 to 9 years","50 to 54 years":"50 to 54 years","50 to 64 years":"50 to 64 years","50 to 64 years old":"50 to 64 years old","50-249 employees":"50-249 employees","500 metres from all public transit stops":"500 metres from all public transit stops","500 metres from low-capacity public transit stops only":"500 metres from low-capacity public transit stops only","55 to 59 years":"55 to 59 years","55 to 64 years":"55 to 64 years","55 to 65 years":"55 to 65 years","55 years and over":"55 years and over","5G":"5G","60 to 64 years":"60 to 64 years","65 to 69 years":"65 to 69 years","65 to 74 years":"65 to 74 years","65 years and older":"65 years and older","65 years and over":"65 years and over","65 years old and older":"65 years old and older","70 to 74 years":"70 to 74 years","70 years and over":"70 years and over","75 to 79 years":"75 to 79 years","75 to 84 years":"75 to 84 years","75 years and over":"75 years and over","80 to 84 years":"80 to 84 years","85 and over":"85 and over","85 to 89 years":"85 to 89 years","90 years and over":"90 years and over","Abbotsford - Mission (CMA)":"Abbotsford - Mission (CMA)","Abbotsford - Mission (CMA), B.C.":"Abbotsford - Mission (CMA), B.C.","Abbotsford - Mission, British Columbia":"Abbotsford - Mission, British Columbia","Abbotsford-Mission, British Columbia":"Abbotsford-Mission, British Columbia","Above-ground biomass stock in forest":"Above-ground biomass stock in forest","Above-ground biomass stock in forest (Tonnes/hectares)":"Above-ground biomass stock in forest (Tonnes/hectares)","Access to Basic Health Care Services":"Access to Basic Health Care Services","Access to basic drinking water services":"Access to basic drinking water services","Access to basic education":"Access to basic education","Access to basic information services":"Access to basic information services","Access to basic mobility":"Access to basic mobility","Access to basic sanitation services":"Access to basic sanitation services","Access to basic waste collection services":"Access to basic waste collection services","Access to basic waste collection services (Proxy)":"Access to basic waste collection services (Proxy)","Access to clean fuels and technology":"Access to clean fuels and technology","Accessions of plant genetic resources secured in conservation facilities":"Accessions of plant genetic resources secured in conservation facilities","Accommodation and food services (NAICS 72)":"Accommodation and food services (NAICS 72)","Activity group":"Activity group","Activity related to digital skills":"Activity related to digital skills","Acute bronchitus and bronchiolitis":"Acute bronchitus and bronchiolitis","Acute respiratory infections":"Acute respiratory infections","Adjusted gender parity index":"Adjusted gender parity index","Adjusted household after-tax income in bottom 40%":"Adjusted household after-tax income in bottom 40%","Adjusted household after-tax income in top 60%":"Adjusted household after-tax income in top 60%","Adjusted language test parity index":"Adjusted language test parity index","Adjusted location parity index":"Adjusted location parity index","Adjusted native parity index":"Adjusted native parity index","Adjusted wealth parity index":"Adjusted wealth parity index","Administration of justice":"Administration of justice","Administrative and financial supervisors and specialized administrative occupations":"Administrative and financial supervisors and specialized administrative occupations","Administrative and financial support and supply chain logistics occupations":"Administrative and financial support and supply chain logistics occupations","Administrative occupations and transportation logistics occupations":"Administrative occupations and transportation logistics occupations","Adoption":"Adoption","Adult criminal courts":"Adult criminal courts","Adults (15-49)":"Adults (15-49)","Advanced manufacturing":"Advanced manufacturing","Advanced technology":"Advanced technology","Against a person":"Against a person","Age":"Age","Age Group":"Age Group","Age at time of death":"Age at time of death","Age group":"Age group","Age group and family type":"Age group and family type","Age not applicable":"Age not applicable","Age of accused":"Age of accused","Age of primary decision maker":"Age of primary decision maker","Age-specific mortality rate per 100,000 population":"Age-specific mortality rate per 100,000 population","Aged 18 to 64 years":"Aged 18 to 64 years","Aged 65 years or older":"Aged 65 years or older","Aged below 18 years":"Aged below 18 years","Agricultural Ammonia Emissions":"Agricultural Ammonia Emissions","Agricultural Greenhouse gas":"Agricultural Greenhouse gas","Agricultural Particulate Matter Emissions":"Agricultural Particulate Matter Emissions","Agricultural water resources":"Agricultural water resources","Agriculture":"Agriculture","Agriculture orientation index for government expenditures":"Agriculture orientation index for government expenditures","Agriculture orientation index for government expenditures [2.a.1]":"Agriculture orientation index for government expenditures","Agriculture share of Government Expenditure":"Agriculture share of Government Expenditure","Agriculture value added share of GDP":"Agriculture value added share of GDP","Agriculture, forestry and fishing":"Agriculture, forestry and fishing","Air Quality":"Air Quality","Air freight volume":"Air freight volume","Air passengers":"Air passengers","Air pollution management":"Air pollution management","Alberta":"Alberta","All age groups":"All age groups","All ages":"All ages","All genders":"All genders","All grades":"All grades","All management occupations":"All management occupations","All materials diverted":"All materials diverted","All methods":"All methods","All municipalities":"All municipalities","All paper fibres":"All paper fibres","All persons":"All persons","All quintiles":"All quintiles","All regions":"All regions","All rural municipalities":"All rural municipalities","All sources of diverted materials":"All sources of diverted materials","All sources of waste for disposal":"All sources of waste for disposal","All species":"All species","All types of perpetrators":"All types of perpetrators","All urban municipalities":"All urban municipalities","Americas":"Americas","Amount last sent":"Amount last sent","Amphibians":"Amphibians","Annual":"Annual","Antigen or vaccine":"Antigen or vaccine","Ants":"Ants","Any tobacco product":"Any tobacco product","Aortic aneurysm and dissection":"Aortic aneurysm and dissection","Apparel knitting mills":"Apparel knitting mills","Apparel manufacturing":"Apparel manufacturing","Apparent opioid toxicity deaths":"Apparent opioid toxicity deaths","Apparent stimulant toxicity deaths":"Apparent stimulant toxicity deaths","Apprenticeship or trades certificate or diploma":"Apprenticeship or trades certificate or diploma","Arab":"Arab","Area":"Area","Assault level 1":"Assault level 1","Assault level 2 weapon or bodily harm":"Assault level 2 weapon or bodily harm","Assault level 3 aggravated":"Assault level 3 aggravated","Asset resilient for at least one month":"Asset resilient for at least one month","Asset resilient for at least six months":"Asset resilient for at least six months","Asset resilient for at least three months":"Asset resilient for at least three months","Assistance type":"Assistance type","Assisting occupations in education and in legal and public protection":"Assisting occupations in education and in legal and public protection","Assisting occupations in support of health services":"Assisting occupations in support of health services","At least some primary (ISCED 1)":"At least some primary (ISCED 1)","Atherosclerosis":"Atherosclerosis","Atlantic":"Atlantic","Atlantic Canada":"Atlantic Canada","Atlantic Ocean":"Atlantic Ocean","Atlantic Region":"Atlantic Region","Atlantic provinces":"Atlantic provinces","Attempted murder":"Attempted murder","Audiologists":"Audiologists","Avalanche":"Avalanche","Bachelor's degree":"Bachelor's degree","Bachelor's degree or higher":"Bachelor's degree or higher","Bachelors degree or higher":"Bachelor's degree or higher","Barrie (CMA), Ont.":"Barrie (CMA), Ont.","Barrie, ON":"Barrie, ON","Barrie, Ontario":"Barrie, Ontario","Basic education":"Basic education","Basic health":"Basic health","Basic metals":"Basic metals","Basic services":"Basic services","Bathurst (CA)":"Bathurst (CA)","Bee flies":"Bee flies","Bees":"Bees","Beetles":"Beetles","Belleville - Quinte West (CMA), Ont.":"Belleville - Quinte West (CMA), Ont.","Belleville - Quinte West, Ontario":"Belleville - Quinte West, Ontario","Belleville, Ontario":"Belleville, Ontario","Belleville-Quinte West, Ontario":"Belleville-Quinte West, Ontario","Below upper secondary":"Below upper secondary","Beverage and tobacco product manufacturing":"Beverage and tobacco product manufacturing","Beverages":"Beverages","Biodiversity":"Biodiversity","Biological":"Biological","Birds":"Birds","Birds index":"Birds index","Bisexual":"Bisexual","Bisexual or pansexual":"Bisexual or pansexual","Black":"Black","Black flies":"Black flies","Born in Canada":"Born in Canada","Both":"Both","Both full- and part-time employees":"Both full- and part-time employees","Both sexes":"Both sexes","Both type":"Both type","Brantford (CMA), Ont.":"Brantford (CMA), Ont.","Brantford, Ontario":"Brantford, Ontario","Bridges and tunnels":"Bridges and tunnels","British Columbia":"British Columbia","British Columbia and Territories Region":"British Columbia and Territories Region","British Columbia and the Territories":"British Columbia and the Territories","Broadcasting and publishing services":"Broadcasting and publishing services","Bryophytes":"Bryophytes","Buildings":"Buildings","Business - finance and administration occupations [1]":"Business - finance and administration occupations [1]","Business, finance and administration occupations, except management":"Business, finance and administration occupations, except management","Butter":"Butter","By species group":"By species group","By system":"By system","CAD (Thousands)":"CAD (Thousands)","Caddisflies":"Caddisflies","Calgary (CMA), Alta.":"Calgary (CMA), Alta.","Calgary, AB":"Calgary, AB","Calgary, Alberta":"Calgary, Alberta","Campbellton (New Brunswick part) (CA)":"Campbellton (New Brunswick part)(CA)","Canada":"Canada","Canada (excluding territories)":"Canada (excluding territories)","Canada (provinces only)":"Canada (provinces only)","Canada – All categories":"Canada – All categories","Canada, Province or territory":"Canada, Province or territory","Canada’s estimated forest area":"Canada’s estimated forest area","Canada’s estimated land area":"Canada’s estimated land area","Canadian dollars":"Canadian dollars","Canadian dollars ($)":"Canadian dollars ($)","Cape Breton (CA)":"Cape Breton (CA)","Care of adults":"Care of adults","Care of children under 18 years":"Care of children under 18 years","Care providers and public protection support occupations and student monitors, crossing guards and related occupations":"Care providers and public protection support occupations and student monitors, crossing guards and related occupations","Causes of death":"Causes of death","Cerebrovascular diseases":"Cerebrovascular diseases","Characteristics":"Characteristics","Charlottetown, PE":"Charlottetown, PE","Cheese":"Cheese","Chemical manufacturing":"Chemical manufacturing","Chewing tobacco":"Chewing tobacco","Chicoutimi - Jonquière, Quebec":"Chicoutimi - Jonquière, Quebec","Child pornography":"Child pornography","Children and young people at the end of lower secondary achieving at least a minimum proficiency level in mathematics":"Children and young people at the end of lower secondary achieving at least a minimum proficiency level in mathematics","Children and young people at the end of lower secondary achieving at least a minimum proficiency level in reading":"Children and young people at the end of lower secondary achieving at least a minimum proficiency level in reading","Children in Grade 4 achieving at least a minimum proficiency level in mathematics":"Children in Grade 4 achieving at least a minimum proficiency level in mathematics","Children in Grade 4 achieving at least a minimum proficiency level in reading":"Children in Grade 4 achieving at least a minimum proficiency level in reading","Chilliwack, British Columbia":"Chilliwack, British Columbia","Chinese":"Chinese","Chiropractors":"Chiropractors","Chronic lower respiratory diseases":"Chronic lower respiratory diseases","Cigarettes":"Cigarettes","Cigars":"Cigars","Coal Production":"Coal Production","Coke and refined petroleum products":"Coke and refined petroleum products","Cold Event":"Cold Event","College":"College","College, CEGEP or other non-university certificate or diploma":"College, CEGEP or other non-university certificate or diploma","College, trade school or some university":"College, trade school or some university","Commitments":"Commitments","Company":"Company","Completed Bachelor's or equivalent education or higher":"Completed Bachelor's or equivalent education or higher","Completed Doctoral or equivalent education":"Completed Doctoral or equivalent education","Completed Master's or equivalent education or higher":"Completed Master's or equivalent education or higher","Completed lower secondary education or higher":"Completed lower secondary education or higher","Completed post-secondary non-tertiary education or higher":"Completed post-secondary non-tertiary education or higher","Completed primary education or higher":"Completed primary education or higher","Completed short-cycle tertiary education or higher":"Completed short-cycle tertiary education or higher","Completed upper secondary education or higher":"Completed upper secondary education or higher","Completion rate":"Completion rate","Completion rate parity":"Completion rate parity","Component":"Component","Compound Index":"Compound Index","Computer, electronic and optical products":"Computer, electronic and optical products","Confidence in Federal Parliament":"Confidence in Federal Parliament","Confidence in the justice system and courts":"Confidence in the justice system and courts","Connected a new device to a Wi-Fi network":"Connected a new device to a Wi-Fi network","Connected a new device via Bluetooth":"Connected a new device via Bluetooth","Consolidated Canadian general government":"Consolidated Canadian general government","Consolidated provincial-territorial and local governments":"Consolidated provincial-territorial and local governments","Construction (NAICS 23)":"Construction (NAICS 23)","Construction + renovation and demolition":"Construction + renovation and demolition","Construction, renovation and demolition":"Construction, renovation and demolition","Contact a community organization":"Contact a community organization","Contact a court or tribunal":"Contact a court or tribunal","Contact a government department/agency":"Contact a government department/agency","Contact a labour union":"Contact a labour union","Contact a lawyer, paralegal, or law student":"Contact a lawyer, paralegal, or law student","Copied or moved files or folders digitally":"Copied or moved files or folders digitally","Copper and aluminum":"Copper and aluminum","Corals":"Corals","Core public infrastructure assets":"Core public infrastructure assets","Corner Brook (CA)":"Corner Brook (CA)","Countries not eligible for official development assistance":"Countries not eligible for official development assistance","Created presentations, or documents with text and pictures, tables or charts":"Created presentations, or documents with text and pictures, tables or charts","Crimes against property":"Crimes against property","Crimes against the person":"Crimes against the person","Criminal Code traffic":"Criminal Code traffic","Criminal harassment":"Criminal harassment","Crustaceans":"Crustaceans","Cultural services":"Cultural services","Culture, recreation and sports facilities":"Culture, recreation and sports facilities","Cumulative percentage change since 1970":"Cumulative percentage change since 1970","Current dollars":"Current dollars","Current status score":"Current score","Currently attending school":"Currently attending school","Cyber-related violation":"Cyber-related violation","Decapods":"Decapods","Demographic and socio-economic":"Demographic and socio-economic","Demographic characteristics":"Demographic characteristics","Density of dentists":"Density of dentists","Density of medical doctors":"Density of medical doctors","Density of nursing and midwifery personnel":"Density of nursing and midwifery personnel","Density of pharmacists":"Density of pharmacists","Dental assistants":"Dental assistants","Dental hygienists":"Dental hygienists","Dentists":"Dentists","Destination region":"Destination region","Development food assistance":"Development food assistance","Diabetes mellitus":"Diabetes mellitus","Diarrhea":"Diarrhea","Did not experience discrimination or unfair treatment in Canada":"Did not experience discrimination or unfair treatment in Canada","Dietitians":"Dietitians","Diphtheria":"Diphtheria","Diphtheria, Tetanus, acellular Pertussis (Tdap) booster":"Diphtheria, Tetanus, acellular Pertussis (Tdap) booster","Disability":"Disability","Disability status":"Disability status","Disbursements":"Disbursements","Discrimination at school":"Discrimination at school","Discrimination at work":"Discrimination at work","Discrimination by or among friends or family":"Discrimination by or among friends or family","Discrimination in any other situation":"Discrimination in any other situation","Discrimination in public areas, a store, bank or restaurant":"Discrimination in public areas, a store, bank or restaurant","Discrimination indicatorss":"Discrimination indicators","Discrimination on the Internet":"Discrimination on the Internet","Discrimination when interacting with the healthcare system":"Discrimination when interacting with the healthcare system","Discrimination while using public transit":"Discrimination while using public transit","Diseases of heart":"Diseases of heart","Distance-capacity public transit service area":"Distance-capacity public transit service area","Does not have a disability":"Does not have a disability","Domestic material consumption":"Domestic material consumption","Domestic material consumption per GDP":"Domestic material consumption per GDP","Domestic material consumption per capita":"Domestic material consumption per capita","Downloaded files from the Internet to your computer or other devices":"Downloaded files from the Internet to your computer or other devices","Dragonflies and damselflies":"Dragonflies and damselflies","Drought":"Drought","Drummondville, Quebec":"Drummondville, Quebec","E-cigarettes":"E-cigarettes","EMS responses to suspected opioid-related overdoses":"EMS responses to suspected opioid-related overdoses","Earnings and profitability, return on assets":"Earnings and profitability, return on assets","Earthquake":"Earthquake","Eastern Asia":"Eastern Asia","Eastern and Southern Europe":"Eastern and Southern Europe","Economic activity":"Economic activity","Economic family type":"Economic family type","Edmonton (CMA), Alta.":"Edmonton (CMA), Alta.","Edmonton, AB":"Edmonton, AB","Edmonton, Alberta":"Edmonton, Alberta","Edmundston (CA)":"Edmunston (CA)","Education level":"Education level","Educational attainment rate":"Educational attainment rate","Educational attainment rate parity":"Educational attainment rate parity","Educational status":"Educational status","Educational subject":"Educational subject","Elderly females not in an economic family":"Elderly females not in an economic family","Elderly males not in an economic family":"Elderly males not in an economic family","Elderly persons in economic families":"Elderly persons in economic families","Elderly persons not in an economic family":"Elderly persons not in an economic family","Elected officials":"Elected officials","Electric":"Electric","Electric power generation, transmission and distribution":"Electric power generation, transmission and distribution","Electrical equipment":"Electrical equipment","Electricity":"Electricity","Electronic methods":"Electronic methods","Electronics":"Electronics","Elementary and/or High School":"Elementary and/or High School","Elementary/High School":"Elementary/High School","Emotional, financial, or psychological abuse":"Emotional, financial, or psychological abuse","Employed in past 12 months":"Employed in past 12 months","Employed, in education":"Employed, in education","Employed, not in education":"Employed, not in education","Employment size":"Employment size","Environmental protection activities or management practices":"Environmental protection activities or management practices","Environmental public health professionals":"Environmental public health professionals","Epidemic":"Epidemic","Essential hypertension and hypertensive renal disease":"Essential hypertension and hypertensive renal disease","Estimates are based on projected values.":"Estimates are based on projected values.","Event sub-type":"Event sub-type","Event type":"Event type","Evolved High-Speed Packet Access (HSPA+)":"Evolved High-Speed Packet Access (HSPA+)","Excellent":"Excellent","Experienced discrimination or unfair treatment in Canada":"Experienced discrimination or unfair treatment in Canada","Extended-time":"Extended-time","Extortion":"Extortion","Fabricated metal product manufacturing":"Fabricated metal product manufacturing","Fabricated metal products, except machinery":"Fabricated metal products, except machinery","Fair":"Fair","Family medicine":"Family medicine","Farm output value per hectare":"Farm output value per hectare","Fatality claims":"Fatality claims","Female":"Female","Female gender":"Female gender","Females":"Females","Females in economic families":"Females in economic families","Females not in an economic family":"Females not in an economic family","Females, 18 to 64 years":"Females, 18 to 64 years","Females, 65 years and over":"Females, 65 years and over","Females, under 18 years":"Females, under 18 years","Ferrous metals":"Ferrous metals","Filipino":"Filipino","First Nations":"First Nations","First Nations (North American Indian)":"First Nations (North American Indian)","First Nations reserves":"First Nations reserves","First Nations, Métis, or Inuit":"First Nations, Métis, or Inuit","First Nations, Métis, or Inuit identity":"First Nations, Métis, or Inuit identity","First Nations, Métis, or Inuit women":"First Nations, Métis, or Inuit women","First generation":"First generation","First official language spoken, English only":"First official language spoken, English only","First official language spoken, French only":"First official language spoken, French only","Fish index":"Fish index","Fishes":"Fishes","Flood":"Flood","Flow type":"Flow type","Flower flies":"Flower flies","Food insecure":"Food insecure","Food insecure, marginal":"Food insecure, marginal","Food insecure, moderate":"Food insecure, moderate","Food insecure, moderate or severe":"Food insecure, moderate or severe","Food insecure, severe":"Food insecure, severe","Food manufacturing":"Food manufacturing","Food products":"Food products","Food secure":"Food secure","Foreign Direct Investment (FDI) Inflow":"Foreign Direct Investment (FDI) Inflow","Foreign Direct Investment (FDI) as a proportion of Gross National Income (GNI)":"Foreign Direct Investment (FDI) as a proportion of Gross National Income (GNI)","Forest area":"Forest area","Forest area as a proportion of total land area":"Forest area as a proportion of total land area","Forest area net change rate":"Forest area net change rate","Forest area net change rate (Percentage)":"Forest area net change rate (Percentage)","Forest area under an independently verified forest management certification scheme":"Forest area under an independently verified forest management certification scheme","Forest area under an independently verified forest management certification scheme (Hectares)":"Forest area under an independently verified forest management certification scheme (Hectares)","Forestry":"Forestry","Fourth decile":"Fourth decile","Fraud":"Fraud","Fredericton (CMA)":"Fredericton (CMA)","Fredericton, NB":"Fredericton, NB","Fredericton, New Brunswick":"Fredericton, New Brunswick","Freshwater Key Biodiversity Areas":"Freshwater Key Biodiversity Areas","Freshwater bivalves":"Freshwater bivalves","Freshwater index":"Freshwater index","Front-line public protection services and paraprofessional occupations in legal, social, community, education services":"Front-line public protection services and paraprofessional occupations in legal, social, community, education services","Full-time employees":"Full-time employees","Furniture":"Furniture","Furniture and related product manufacturing":"Furniture and related product manufacturing","Gable top and aseptic containers":"Gable top and aseptic containers","Gander (CA)":"Gander (CA)","Gatineau, QC":"Gatineau, QC","Gatineau, Quebec":"Gatineau, Quebec","Gay or lesbian":"Gay or lesbian","Gender":"Gender","General trades":"General trades","Generated":"Generated","Genetic counsellors":"Genetic counsellors","Genetic resources for food and agriculture (GRFA)":"Genetic resources for food and agriculture (GRFA)","Geography":"Geography","Geological":"Geological","Geomagnetic Storm":"Geomagnetic Storm","Glass":"Glass","Good":"Good","Grade":"Grade","Grades 10-12":"Grades 10-12","Grades 7-9":"Grades 7-9","Graduation rate":"Graduation rate","Grand Falls-Windsor (CA)":"Grand Falls-Windsor (CA)","Grants":"Grants","Grasshoppers and relatives":"Grasshoppers and relatives","Great Lakes and St. Lawrence River":"Great Lakes and St. Lawrence River","Great Lakes and St. Lawrence River":"Great Lakes and St. Lawrence River","Greater Sudbury (CMA), Ont.":"Greater Sudbury (CMA), Ont.","Greater Sudbury / Grand Sudbury, Ontario":"Greater Sudbury, Ontario","Greater Sudbury, Ontario":"Greater Sudbury, Ontario","Groundfish":"Groundfish","Group not indicated elsewhere":"Group not indicated elsewhere","Growth rates of household expenditure per capita among the bottom 40 per cent of the population and the total population":"Growth rates of household expenditure per capita among the bottom 40 per cent of the population and the total population","Growth rates of income per capita among the bottom 40 per cent of the population and the total population":"Growth rates of income per capita among the bottom 40 per cent of the population and the total population","Guelph (CMA), Ont.":"Guelph (CMA), Ont.","Guelph, Ontario":"Guelph, Ontario","Haemophilus influenzae type B (Hib)":"Haemophilus influenzae type B (Hib)","Halifax (CMA)":"Halifax (CMA)","Halifax (CMA), N.S.":"Halifax (CMA), N.S.","Halifax, NS":"Halifax, NS","Halifax, Nova Scotia":"Halifax, Nova Scotia","Hamilton (CMA)":"Hamilton (CMA)","Hamilton (CMA), Ont.":"Hamilton (CMA), Ont.","Hamilton, ON":"Hamilton, ON","Hamilton, Ontario":"Hamilton, Ontario","Has a disability":"Has a disability","Hate crime":"Hate crime","Health information management professionals":"Health information management professionals","Health occupations [3]":"Health occupations [3]","Health occupations, except management":"Health occupations, except management","Health treating and consultation services professionals":"Health treating and consultation services professionals","Health worker density, by type of occupation (per 10,000 population)":"Health worker density, by type of occupation (per 10,000 population)","Health worker distribution, by sex and type of occupation":"Health worker distribution, by sex and type of occupation","Heat Event":"Heat Event","Heavy Industry":"Heavy Industry","Hectares":"Hectares","Hectares (Millions)":"Hectares (Millions)","Helpers and labourers and other transport drivers, operators and labourers":"Helpers and labourers and other transport drivers, operators and labourers","Hepatitis B":"Hepatitis B","Heterosexual":"Heterosexual","High school or less":"High school or less","Highest level of education":"Highest level of education","Homicide":"Homicide","Horse flies":"Horse flies","Household expenditure per capita":"Household expenditure per capita","Household food security status":"Household food security status","Household hazardous waste":"Household hazardous waste","Household income decile":"Household income decile","Household income quintile":"Household income quintile","Household income quintile or decile":"Household income quintile or decile","Hudson Bay":"Hudson Bay","Human Papillomavirus (HPV)":"Human Papillomavirus (HPV)","Hurricane / Typhoon / Tropical Storm":"Hurricane / Typhoon / Tropical Storm","Hydraulic turbine":"Hydraulic turbine","Hydrogen":"Hydrogen","Identity fraud":"Identity fraud","Identity theft":"Identity theft","Immigrant":"Immigrant","Immigrant status":"Immigrant status","Immigrant women":"Immigrant women","Immigrants":"Immigrants","Immigrants, 10 years or less in Canada":"Immigrants, 10 years or less in Canada","Immigrants, landed 5 or less years earlier":"Immigrants, landed 5 or less years earlier","Immigrants, landed more than 10 years earlier":"Immigrants, landed more than 10 years earlier","Immigrants, landed more than 5 to 10 years earlier":"Immigrants, landed more than 5 to 10 years earlier","Immigrants, more than 10 years in Canada":"Immigrants, more than 10 years in Canada","Immigrants, years in Canada not stated":"Immigrants, years in Canada not stated","Implementation":"Implementation","In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behaviour":"In situ neoplasms, benign neoplasms and neoplasms of uncertain or unknown behaviour","Income per capita":"Income per capita","Incorporated Products":"Incorporated Products","Indecent/Harassing communications":"Indecent/Harassing communications","Index":"Index","Indicator":"Indicator","Indigenous":"Indigenous","Indigenous group":"Indigenous group","Indigenous identity":"Indigenous identity","Indigenous peoples":"Indigenous peoples","Indigenous person":"Indigenous person","Indigenous population":"Indigenous population","Indigenous status":"Indigenous status","Industries":"Industries","Industry":"Industry","Infestation":"Infestation","Influenza (flu)":"Influenza (flu)","Influenza and pneumonia":"Influenza and pneumonia","Information and communication technologies (ICT)":"Information and communication technologies (ICT)","Institutions":"Institutions","Internet users aged 15 to 24 years":"Internet users aged 15 to 24 years","Internet users aged 25 to 44 years":"Internet users aged 25 to 44 years","Internet users aged 45 to 64 years":"Internet users aged 45 to 64 years","Internet users aged 65 years and over":"Internet users aged 65 years and over","Intestinal nematode infections":"Intestinal nematode infections","Intimate partner":"Intimate partner","Inuit":"Inuit","Inuk":"Inuk","Inuk (Inuit)":"Inuk (Inuit)","Japanese":"Japanese","Judges - Federal government public administration":"Judges - Federal government public administration","Judges - Provincial and territorial public administration":"Judges - Provincial and territorial public administration","Kamloops (CMA)":"Kamloops (CMA)","Kamloops, British Columbia":"Kamloops, British Columbia","Kelowna (CMA)":"Kelowna (CMA)","Kelowna (CMA), B.C.":"Kelowna (CMA), B.C.","Kelowna, British Columbia":"Kelowna, British Columbia","Kentville (CA)":"Kentville (CA)","Key Biodiversity Areas (KBAs)":"Key Biodiversity Areas (KBAs)","Kingston (CMA), Ont.":"Kingston (CMA), Ont.","Kingston, Ontario":"Kingston, Ontario","Kitchener - Cambridge - Waterloo (CMA)":"Kitchener - Cambridge - Waterloo (CMA)","Kitchener - Cambridge - Waterloo (CMA), Ont.":"Kitchener - Cambridge - Waterloo (CMA), Ont.","Kitchener - Cambridge - Waterloo, Ontario":"Kitchener - Cambridge - Waterloo, Ontario","Kitchener, ON":"Kitchener, ON","Kitchener, Ontario":"Kitchener, Ontario","Kitchener-Cambridge-Waterloo, Ontario":"Kitchener-Cambridge-Waterloo, Ontario","Knowledge-based industries (KBI)":"Knowledge-based industries (KBI)","Korean":"Korean","LGBTQ2 women":"LGBTQ2 women","LGBTQ2+":"LGBTQ2+","LGBTQ2+ people":"LGBTQ2+ people","Labourers in processing, manufacturing and utilities":"Labourers in processing, manufacturing and utilities","Lacewings":"Lacewings","Lake water quality, extreme turbidity":"Lake water quality, extreme turbidity","Lake water quality, high turbidity":"Lake water quality, high turbidity","Lake water quality, low turbidity":"Lake water quality, low turbidity","Lake water quality, medium turbidity":"Lake water quality, medium turbidity","Lake water quality, no or improving condition":"Lake water quality, no or improving condition","Lake water quality, trophic state":"Lake water quality, trophic state","Lake water quality, trophic state and turbidity":"Lake water quality, trophic state and turbidity","Lake water quality, turbidity":"Lake water quality, turbidity","Lake water quality, turbidity state":"Lake water quality, turbidity state","Land area":"Land area","Land consumption rate":"Land consumption rate","Land use category":"Land use category","Landed immigrants":"Landed immigrants","Landslide":"Landslide","Large pelagics":"Large pelagics","Large population centres":"Large population centres","Latin American":"Latin American","Leadership position":"Leadership position","Least developed countries":"Least developed countries","Legislative and senior management occupations":"Legislative and senior management occupations","Leprosy":"Leprosy","Lesbian or gay":"Lesbian or gay","Lethbridge (CMA), Alta.":"Lethbridge (CMA), Alta.","Lethbridge, Alberta":"Lethbridge, Alberta","Level of education":"Level of education","Level of government":"Level of government","Licensed practical nurses":"Licensed practical nurses","Light Manufacturing, Construction and Forest Resources":"Light Manufacturing, Construction and Forest Resources","Literacy":"Literacy","Little cigars or cigarillos":"Little cigars or cigarillos","Living common law":"Living common law","Local breeds stored in genebank":"Local breeds stored in genebank","Location":"Location","Logging (except contract)":"Logging (except contract)","London (CMA)":"London (CMA)","London (CMA), Ont.":"London (CMA), Ont.","London, ON":"London, ON","London, Ontario":"London, Ontario","Long-Term Evolution (LTE)":"Long-Term Evolution (LTE)","Long-Term Evolution - A (LTE-A)":"Long-Term Evolution - A (LTE-A)","Lost time claims":"Lost time claims","Lower secondary education":"Lower secondary education","Lowest decile":"Lowest decile","Lowest quintile":"Lowest quintile","Luring a child via a computer":"Luring a child via a computer","MVA as a proportion of GDP":"MVA as a proportion of GDP","MVA per capita":"MVA per capita","Machine operators, assemblers and inspectors in processing, manufacturing and printing":"Machine operators, assemblers and inspectors in processing, manufacturing and printing","Machinery and equipment n.e.c.":"Machinery and equipment n.e.c.","Machinery manufacturing":"Machinery manufacturing","Mackenzie River":"Mackenzie River","Macrolichens":"Macrolichens","Mail and message distribution, other transport equipment operators and related maintenance workers":"Mail and message distribution, other transport equipment operators and related maintenance workers","Main activity":"Main activity","Major roads and highways":"Major roads and highways","Making or distribution of child pornography":"Making or distribution of child pornography","Malaria incidence per 100,000 population":"Malaria incidence per 100,000 population","Male":"Male","Male gender":"Male gender","Males":"Males","Males in economic families":"Males in economic families","Males not in an economic family":"Males not in an economic family","Males, 18 to 64 years":"Males, 18 to 64 years","Males, 65 years and over":"Males, 65 years and over","Males, under 18 years":"Males, under 18 years","Malignant neoplasms":"Malignant neoplasms","Mammals":"Mammals","Mammals index":"Mammals index","Management occupations":"Management occupations","Management occupations [0]":"Management occupations [0]","Manitoba":"Manitoba","Manufacturing (NAICS 31-33)":"Manufacturing (NAICS 31-33)","Manufacturing value added (MVA) as a proportion of gross domestic product (GDP)":"Manufacturing value added (MVA) as a proportion of gross domestic product (GDP)","Manufacturing value added (MVA) per capita":"Manufacturing value added (MVA) per capita","Marginal":"Marginal","Marine index":"Marine index","Marine mammals":"Marine mammals","Marital status":"Marital status","Married":"Married","Married or common-law":"Married or common-law","Married or in a union":"Married or in a union","Married or living common law":"Married or living common law","Material footprint":"Material footprint","Material footprint per GDP":"Material footprint per GDP","Material footprint per capita":"Material footprint per capita","Maternal deaths per 100,000 live births":"Maternal deaths per 100,000 live births","Maximum":"Maximum","Mayflies":"Mayflies","Measles":"Measles","Measure":"Measure","Medical doctors":"Medical doctors","Medical laboratory technologists":"Medical laboratory technologists","Medical physicists":"Medical physicists","Medical radiation technologists":"Medical radiation technologists","Medical research":"Medical research","Medium population centres":"Medium population centres","Medium-Large scale food producers":"Medium-Large scale food producers","Megatonnes of carbon dioxide equivalent (Mt CO2 eq)":"Megatonnes of carbon dioxide equivalent (Mt CO2 eq)","Megatonnes of carbon dioxide equivalent (Mt CO2 eq.) per billion dollars GDP":"Megatonnes of carbon dioxide equivalent (Mt CO2 eq.) per billion dollars GDP","Members of Cabinet":"Members of Cabinet","Members of Parliament":"Members of Parliament","Members of federal Cabinet":"Members of federal Cabinet","Members of national Parliament":"Members of national Parliament","Men":"Men","Men+":"Men+","Meningococcal type C":"Meningococcal type C","Meteorological - Hydrological":"Meteorological - Hydrological","Method":"Method","Metric tonnes":"Metric tonnes","Metric tonnes (x1,000) per million dollars of GDP":"Metric tonnes (x1,000) per million dollars of GDP","Micrograms per cubic metre":"Micrograms per cubic metre","Middle management occupations in retail and wholesale trade and customer services":"Middle management occupations in retail and wholesale trade and customer services","Middle management occupations in trades - transportation - production and utilities":"Middle management occupations in trades - transportation - production and utilities","Middle management occupations in trades, transportation, production and utilities":"Middle management occupations in trades, transportation, production and utilities","Midwives":"Midwives","Mild":"Mild","Million cubic metres":"Million cubic metres","Million metric tonnes":"Million metric tonnes","Millions $ CAD":"Millions $ CAD","Milton, Ontario":"Milton, Ontario","Minimum":"Minimum","Mining":"Mining","Mining and quarrying":"Mining and quarrying","Mixed evidence":"Mixed evidence","Mixed metals":"Mixed metals","Mixed pressures":"Mixed pressures","Modelled data":"Modelled data","Moderate":"Moderate","Molluscs":"Molluscs","Moncton (CMA)":"Moncton (CMA)","Moncton (CMA), N.B.":"Moncton (CMA), N.B.","Moncton, New Brunswick":"Moncton, New Brunswick","Montreal, QC":"Montreal, QC","Montreal, Quebec":"Montreal, Quebec","Montréal (CMA), Que.":"Montréal (CMA), Que.","Montréal, Quebec":"Montréal, Quebec","Mortality rate per 1,000 live births":"Mortality rate per 1,000 live births","Mortality rate per 100,000 population":"Mortality rate per 100,000 population","Mosquitoes":"Mosquitoes","Moths and butterflies":"Moths and butterflies","Motor vehicle accidents":"Motor vehicle accidents","Motor vehicles, trailers and semi-trailers":"Motor vehicles, trailers and semi-trailers","Mt CO2 eq. per billion dollars GDP":"Mt CO2 eq. per billion dollars GDP","Multiple Indigenous identities":"Multiple Indigenous identities","Multiple Indigenous identities or specific group not stated":"Multiple Indigenous identities or specific group not stated","Multiple visible minorities":"Multiple visible minorities","Multisector aid for basic social services":"Multisector aid for basic social services","Mumps":"Mumps","Municipal":"Municipal","Métis":"Métis","Nanaimo (CMA)":"Nanaimo (CMA)","Nanaimo, British Columbia":"Nanaimo, British Columbia","National Occupational Classification (NOC)":"National Occupational Classification (NOC)","National index":"National index","National marine":"National marine","National terrestrial":"National terrestrial","Natural and applied sciences and related occupations [2]":"Natural and applied sciences and related occupations [2]","Natural and applied sciences and related occupations, except management":"Natural and applied sciences and related occupations, except management","Natural gas":"Natural gas","Natural gas distribution":"Natural gas distribution","Natural resources - agriculture and related production occupations [8]":"Natural resources - agriculture and related production occupations [8]","Natural resources, agriculture and related production occupations, except management":"Natural resources, agriculture and related production occupations, except management","Natural sciences and engineering":"Natural sciences and engineering","Neonatal mortality rate per 1,000 live births":"Neonatal mortality rate per 1,000 live births","New Brunswick":"New Brunswick","New Glasgow (CA)":"New Glasgow (CA)","Newfoundland and Labrador":"Newfoundland and Labrador","No certificate, diploma or degree":"No certificate, diploma or degree","Noise and vibration abatement":"Noise and vibration abatement","Non immigrants":"Non immigrants","Non-Aboriginal identity":"Non-Aboriginal identity","Non-Immigrants":"Non-immigrants","Non-Indigenous identity":"Non-Indigenous identity","Non-Indigenous people":"Non-Indigenous people","Non-Indigenous person":"Non-Indigenous person","Non-Indigenous population":"Non-Indigenous population","Non-Inuit":"Non-Inuit","Non-LGBTQ2+ people":"Non-LGBTQ2+ people","Non-consensual distribution of intimate images":"Non-consensual distribution of intimate images","Non-elderly females not in an economic family":"Non-elderly females not in an economic family","Non-elderly males not in an economic family":"Non-elderly males not in an economic family","Non-elderly persons not in an economic family":"Non-elderly persons not in an economic family","Non-electronic methods":"Non-electronic methods","Non-immigrant":"Non-immigrant","Non-immigrants":"Non-immigrants","Non-indigenous identity":"Non-indigenous identity","Non-intimate partner":"Non-intimate partner","Non-marine snails and slugs":"Non-marine snails and slugs","Non-metallic mineral product manufacturing":"Non-metallic mineral product manufacturing","Non-permanent residents":"Non-permanent residents","Non-pregnant women only":"Non-pregnant women only","Non-residential sources of diverted materials":"Non-residential sources of diverted materials","Non-residential sources of waste for disposal":"Non-residential sources of waste for disposal","Non-visible minority":"Non-visible minority","North Africa":"North Africa","Northern Territories":"Northern Territories","Northern and Rural Manitoba":"Northern and Rural Manitoba","Northwest Territories":"Northwest Territories","Northwest Territories and Nunavut":"Northwest Territories and Nunavut","Not a visible minority":"Not a visible minority","Not a visible minority nor Indigenous":"Not a visible minority nor Indigenous","Not currently attending school":"Not currently attending school","Not employed in past 12 months":"Not employed in past 12 months","Not in the labour force, Not in employment, education or training (NEET)":"Not in the labour force, Not in employment, education or training (NEET)","Not on track":"Not on track","Not stated":"Not stated","Not stated, immigrant status":"Not stated, immigrant status","Not stated, population by indigenous identity":"Not stated, population by indigenous identity","Not stated, sexual orientation":"Not stated, sexual orientation","Not stated, visible minority population":"Not stated, visible minority population","Not treated":"Not treated","Nova Scotia":"Nova Scotia","Nuclear steam turbine":"Nuclear steam turbine","Number":"Number","Number of (shared) basins showing high surface-water extent changes":"Number of (shared) basins showing high surface-water extent changes","Number of automated teller machines (ATMs) per 100,000 adults":"Number of automated teller machines (ATMs) per 100,000 adults","Number of claims":"Number of claims","Number of commercial bank branches per 100,000 adults":"Number of commercial bank branches per 100,000 adults","Number of deaths":"Number of deaths","Number of deaths per 1,000 live births":"Number of deaths per 1,000 live births","Number of litres of pure alcohol sales per person aged 15 years and older in a year":"Number of litres of pure alcohol sales per person aged 15 years and older in a year","Number of neonatal deaths":"Number of neonatal deaths","Number of newly infected people per 1,000 uninfected population":"Number of newly infected people per 1,000 uninfected population","Number of newly infected people per 100,000 uninfected population":"Number of newly infected people per 100,000 uninfected population","Number of passengers":"Number of passengers","Number of people":"Number of people","Number of people requiring interventions against leprosy":"Number of people requiring interventions against leprosy","Number of people requiring interventions against rabies":"Number of people requiring interventions against rabies","Number of projects":"Number of projects","Number of sites":"Number of sites","Number per 100,000 adults":"Number per 100,000 adults","Numeracy":"Numeracy","Nunavut":"Nunavut","Nurse practitioners":"Nurse practitioners","Nursing and allied health professionals":"Nursing and allied health professionals","Nursing and midwifery personnel":"Nursing and midwifery personnel","ODA as a share of GNI":"ODA as a share of GNI","ODA to least developed countries as a share of GNI":"ODA to least developed countries as a share of GNI","Occasional":"Occasional","Occupational therapists":"Occupational therapists","Occupations in art - culture - recreation and sport [5]":"Occupations in art - culture - recreation and sport [5]","Occupations in art, culture and sport":"Occupations in art, culture and sport","Occupations in art, culture, recreation and sport, except management":"Occupations in art, culture, recreation and sport, except management","Occupations in education - law and social - community and government services [4]":"Occupations in education - law and social - community and government services [4]","Occupations in education, law and social, community and government services, except management":"Occupations in education, law and social, community and government services, except management","Occupations in front-line public protection services":"Occupations in front-line public protection services","Occupations in manufacturing and utilities [9]":"Occupations in manufacturing and utilities [9]","Occupations in manufacturing and utilities, except management":"Occupations in manufacturing and utilities, except management","Occupations in sales and services":"Occupations in sales and services","Offence":"Offence","Offences":"Offences","Official Development Assistance":"Official Development Assistance","Official Development Assistance (ODA)":"Official Development Assistance (ODA)","Official Development Assistance (ODA) as a proportion of Gross National Income (GNI)":"Official Development Assistance (ODA) as a proportion of Gross National Income (GNI)","Official and private flows":"Official and private flows","Official development assistance":"Official development assistance","Official development assistance on conservation and sustainable use of biodiversity":"Official development assistance on conservation and sustainable use of biodiversity","Officially supported export credits":"Officially supported export credits","Oil and Gas":"Oil and Gas","Oil and gas extraction":"Oil and gas extraction","On track":"On track","On-time":"On-time","Ontario":"Ontario","Ontario Region":"Ontario Region","Opioid-related poisoning hospitalizations":"Opioid-related poisoning hospitalizations","Opticians":"Opticians","Optometrists":"Optometrists","Organics":"Organics","Oshawa (CMA), Ont.":"Oshawa (CMA), Ont.","Oshawa, ON":"Oshawa, ON","Oshawa, Ontario":"Oshawa, Ontario","Other Indigenous identity":"Other Indigenous identity","Other Milk Products":"Other Milk Products","Other Official Flows (OOF)":"Other Official Flows (OOF)","Other Official Flows (non Export Credit)":"Other Official Flows (non Export Credit)","Other action to resolve problem":"Other action to resolve problem","Other activity":"Other activity","Other ages":"Other ages","Other group designated as visible minority":"Other group designated as visible minority","Other industries from the North American Industrial Classification System (NAICS)":"Other industries from the North American Industrial Classification System (NAICS)","Other land transport accidents":"Other land transport accidents","Other manufacturing":"Other manufacturing","Other manufacturing industries":"Other manufacturing industries","Other materials":"Other materials","Other non-metallic mineral products":"Other non-metallic mineral products","Other revenue":"Other revenue","Other services (NAICS 81)":"Other services (NAICS 81)","Other types of electricity generation":"Other types of electricity generation","Other visible minority":"Other visible minority","Others":"Others","Ottawa - Gatineau (CMA), Ont./Que.":"Ottawa - Gatineau (CMA), Ont./Que.","Ottawa - Gatineau (Ontario part) (CMA)":"Ottawa - Gatineau (Ontario part) (CMA)","Ottawa - Gatineau (Ontario part) (CMA), Ont.":"Ottawa - Gatineau (Ontario part) (CMA), Ont.","Ottawa - Gatineau (Ontario part), Ontario":"Ottawa - Gatineau (Ontario part), Ontario","Ottawa - Gatineau (Quebec part) (CMA), Que.":"Ottawa - Gatineau (Quebec part) (CMA), Que.","Ottawa - Gatineau (Quebec part), Quebec":"Ottawa - Gatineau (Quebec part), Quebec","Ottawa - Gatineau, Ontario and Quebec":"Ottawa - Gatineau, Ontario et Québec","Ottawa, ON":"Ottawa, ON","Ottawa, Ontario":"Ottawa, Ontario","Ottawa-Gatineau, Ontario part":"Ottawa-Gatineau, Ontario part","Ottawa-Gatineau, Ontario/Quebec":"Ottawa-Gatineau, Ontario/Quebec","Ottawa-Gatineau, Quebec part":"Ottawa-Gatineau, Quebec part","Outside Canada":"Outside Canada","Overall":"Overall","Overall approval rate, line of credit":"Overall approval rate, line of credit","Overall approval rate, term loan":"Overall approval rate, term loan","Owner":"Owner","Owner who is a first-time homebuyer":"Owner who is a first-time homebuyer","Owner who is not a first-time homebuyer":"Owner who is not a first-time homebuyer","Ownership demographics":"Ownership demographics","Pacific Ocean":"Pacific Ocean","Pandemic":"Pandemic","Paper and paper products":"Paper and paper products","Paper manufacturing":"Paper manufacturing","Paramedics":"Paramedics","Paraprofessional occupations in legal, social, community and education services":"Paraprofessional occupations in legal, social, community and education services","Parity in the participation rate of youth and adults in formal and non-formal education and training in the previous 12 months":"Parity in the participation rate of youth and adults in formal and non-formal education and training in the previous 12 months","Parity in the proportion of students achieving at least a minimum proficiency level in mathematics":"Parity in the proportion of students achieving at least a minimum proficiency level in mathematics","Parity in the proportion of students achieving at least a minimum proficiency level in reading":"Parity in the proportion of students achieving at least a minimum proficiency level in reading","Parity index":"Parity index","Part-time employees":"Part-time employees","Participation rate of youth and adults in formal and non-formal education and training in the previous 12 months":"Participation rate of youth and adults in formal and non-formal education and training in the previous 12 months","Per 1,000 live births":"Per 1,000 live births","Per 100,000 live births":"Per 100,000 live births","Per 100,000 population":"Per 100,000 population","Per 1000 females (15-19 years)":"Per 1000 females (15-19 years)","Per capita":"Per capita","Percent change (%)":"Percent change (%)","Percent change in water-use efficiency over time (%)":"Percent change in water-use efficiency over time (%)","Percentage":"Percentage","Percentage (%)":"Percentage (%)","Percentage of Canadians 15 years of age and older":"Percentage of Canadians 15 years of age and older","Percentage of GNI (%)":"Percentage of GNI (%)","Percentage of incidents of violent crime reported to police":"Percentage of incidents of violent crime reported to police","Percentage of mothers with a child aged 12 months or less that received maternity or parental benefits":"Percentage of mothers with a child aged 12 months or less that received maternity or parental benefits\n","Permanent water":"Permanent water","Person with disability":"Person with disability","Person without disability":"Person without disability","Person(s) with a disability":"Person(s) with a disability","Persons 18 to 64 years":"Persons 18 to 64 years","Persons 18 to 64 years in economic families":"Persons 18 to 64 years in economic families","Persons 18 to 64 years old":"Persons 18 to 64 years old","Persons 65 years and older":"Persons 65 years and older","Persons 65 years and over":"Persons 65 years and over","Persons all ages and family types":"Persons all ages and family types","Persons born in Canada":"Persons born in Canada","Persons in a couple only family":"Persons in a couple only family","Persons in a couple with children family":"Persons in a couple with children family","Persons in a lone-parent family":"Persons in a lone-parent family","Persons in an economic family":"Persons in an economic family","Persons in an other economic family type":"Persons in an other economic family type","Persons in couple families with children":"Persons in couple families with children","Persons in couple families with other relatives":"Persons in couple families with other relatives","Persons in couples":"Persons in couples","Persons in economic families":"Persons in economic families","Persons in elderly couples":"Persons in elderly couples","Persons in elderly families":"Persons in elderly families","Persons in female lone-parent families":"Persons in female lone-parent families","Persons in lone-parent families":"Persons in lone-parent families","Persons in low income":"Persons in low income","Persons in male lone-parent families":"Persons in male lone-parent families","Persons in non-elderly families":"Persons in non-elderly families","Persons in other elderly families":"Persons in other elderly families","Persons in other non-elderly families":"Persons in other non-elderly families","Persons not in an economic family":"Persons not in an economic family","Persons under 18 years":"Persons under 18 years","Persons under 18 years in couple families with children":"Persons under 18 years in couple families with children","Persons under 18 years in economic families":"Persons under 18 years in economic families","Persons under 18 years in female lone-parent families":"Persons under 18 years in female lone-parent families","Persons under 18 years old":"Persons under 18 years old","Persons with a disability, difficulty or long-term condition":"Persons with a disability, difficulty or long-term condition","Persons without a disability, difficulty or long-term condition":"Persons without a disability, difficulty or long-term condition","Pertussis (whooping cough)":"Pertussis (whooping cough)","Peterborough (CMA), Ont.":"Peterborough (CMA), Ont.","Peterborough, Ontario":"Peterborough, Ontario","Petroleum and coal product manufacturing":"Petroleum and coal product manufacturing","Pharmacists":"Pharmacists","Pharmacy technicians":"Pharmacy technicians","Physical abuse":"Physical abuse","Physical assault":"Physical assault","Physical or sexual abuse":"Physical or sexual abuse","Physical violence":"Physical violence","Physician assistants":"Physician assistants","Physicians":"Physicians","Physiotherapists":"Physiotherapists","Pipe":"Pipe","Pipeline transportation":"Pipeline transportation","Place of residence of mother":"Place of residence of mother","Plastics":"Plastics","Plastics and rubber products manufacturing":"Plastics and rubber products manufacturing","Pneumococcal":"Pneumococcal","Pneumoconioses and chemical effects":"Pneumoconioses and chemical effects","Pneumonitis due to solids and liquids":"Pneumonitis due to solids and liquids","Police-reported":"Police-reported","Polio":"Polio","Poor":"Poor","Populated":"Populated","Population aged 15 years and over":"Population aged 15 years and over","Population and distribution trends consistent with objectives":"Population and distribution trends consistent with objectives","Population centres":"Population centres","Population group":"Population group","Population growth rate":"Population growth rate","Postsecondary certificate or diploma (non-university)":"Postsecondary certificate or diploma (non-university)","Postsecondary certificate or diploma below bachelor level":"Postsecondary certificate or diploma below bachelor level","Postsecondary certificate, diploma or degree":"Postsecondary certificate, diploma or degree","Potable water":"Potable water","Poverty reduction aid type":"Poverty reduction aid type","Prairie Region":"Prairie Region","Prairie provinces":"Prairie provinces","Prairies":"Prairies","Prairies Region":"Prairies Region","Prairies and northern Ontario":"Prairies and northern Ontario","Pregnant women only":"Pregnant women only","Primary education":"Primary education","Primary metal manufacturing":"Primary metal manufacturing","Prince Edward Island":"Prince Edward Island","Printing and reproduction of recorded media":"Printing and reproduction of recorded media","Private flows at market terms":"Private flows at market terms","Private grants, net":"Private grants, net","Product":"Product","Professional occupations in applied sciences (except engineering)":"Professional occupations in applied sciences (except engineering)","Professional occupations in art and culture":"Professional occupations in art and culture","Professional occupations in business":"Professional occupations in business","Professional occupations in education services":"Professional occupations in education services","Professional occupations in engineering":"Professional occupations in engineering","Professional occupations in finance":"Professional occupations in finance","Professional occupations in finance and business":"Professional occupations in finance and business","Professional occupations in government services":"Professional occupations in government services","Professional occupations in health":"Professional occupations in health","Professional occupations in law":"Professional occupations in law","Professional occupations in law, education, social, community and government services":"Professional occupations in law, education, social, community and government services","Professional occupations in natural and applied sciences":"Professional occupations in natural and applied sciences","Professional occupations in natural sciences":"Professional occupations in natural sciences","Professional occupations in social and community services":"Professional occupations in social and community services","Proficiency level":"Proficiency level","Progress status":"Progress status","Progress toward productive and sustainable agriculture, current status score":"Progress toward productive and sustainable agriculture, current status score","Progress toward productive and sustainable agriculture, trend score":"Progress toward productive and sustainable agriculture, trend score","Proportion of children achieving at least a minimum proficiency level":"Proportion of children achieving at least a minimum proficiency level","Proportion of children and young people at the end of lower secondary achieving at least a minimum proficiency level in mathematics":"Proportion of children and young people at the end of lower secondary achieving at least a minimum proficiency level in mathematics","Proportion of children and young people at the end of lower secondary achieving at least a minimum proficiency level in reading":"Proportion of children and young people at the end of lower secondary achieving at least a minimum proficiency level in reading","Proportion of children covered by social protection benefits":"Proportion of children covered by social protection benefits","Proportion of children in Grade 4 achieving at least a minimum proficiency level in mathematics":"Proportion of children in Grade 4 achieving at least a minimum proficiency level in mathematics","Proportion of children in Grade 4 achieving at least a minimum proficiency level in reading":"Proportion of children in Grade 4 achieving at least a minimum proficiency level in reading","Proportion of economic families with children receiving a child benefit":"Proportion of economic families with children receiving a child benefit\n","Proportion of employed labour force eligible for workers compensation benefits":"Proportion of employed labour force eligible for workers' compensation benefits\n","Proportion of forest area located within legally established protected areas":"Proportion of forest area located within legally established protected areas","Proportion of forest area located within legally established protected areas (Percentage)":"Proportion of forest area located within legally established protected areas (Percentage)","Proportion of forest area under a long term forest management plan":"Proportion of forest area under a long term forest management plan","Proportion of forest area under a long term forest management plan (Percentage)":"Proportion of forest area under a long term forest management plan (Percentage)","Proportion of individuals within a population who reported experiencing discrimination or unfair treatment":"Proportion of individuals within a population who reported experiencing discrimination or unfair treatment","Proportion of individuals within a population who reported experiencing discrimination or unfair treatment in the past 5 years":"Proportion of individuals within a population who reported experiencing discrimination or unfair treatment in the past 5 years","Proportion of older persons receiving a pension":"Proportion of older persons receiving a pension\n","Proportion of persons with disabilities receiving benefits":"Proportion of persons with disabilities receiving benefits","Proportion of poor population receiving social assistance cash benefit":"Proportion of poor population receiving social assistance cash benefit","Proportion of population (individuals) with share above 10% with large household expenditures on select health care items as a share of total after-tax income":"Proportion of population (individuals) with share above 10% with large household expenditures on select health care items as a share of total after-tax income","Proportion of population (individuals) with share above 25% with large household expenditures on select health care items as a share of total after-tax income":"Proportion of population (individuals) with share above 25% with large household expenditures on select health care items as a share of total after-tax income","Proportion of population covered by 5G":"Proportion of population covered by 5G","Proportion of population covered by Evolved High-Speed Packet Access (HSPA+)":"Proportion of population covered by Evolved High-Speed Packet Access (HSPA+)","Proportion of population covered by Long-Term Evolution (LTE)":"Proportion of population covered by Long-Term Evolution (LTE)","Proportion of population covered by Long-Term Evolution - A (LTE-A)":"Proportion of population covered by Long-Term Evolution - A (LTE-A)","Proportion of population covered by at least one social protection cash benefit":"Proportion of population covered by at least one social protection cash benefit","Proportion of population reporting to have experienced discrimination or unfair treatment":"Proportion of population reporting to have experienced discrimination or unfair treatment","Proportion of population reporting to have experienced discrimination or unfair treatment in the past 5 years":"Proportion of population reporting to have experienced discrimination or unfair treatment in the past 5 years","Proportion of population subjected to physical violence in the previous 12 months":"Proportion of population subjected to physical violence in the previous 12 months","Proportion of population subjected to sexual violence in the previous 12 months":"Proportion of population subjected to sexual violence in the previous 12 months","Proportion of population using basic drinking water services":"Proportion of population using basic drinking water services","Proportion of population using basic sanitation services":"Proportion of population using basic sanitation services","Proportion of population with access to electricity":"Proportion of population with access to electricity","Proportion of population with primary reliance on clean fuels and technology":"Proportion of population with primary reliance on clean fuels and technology","Proportion of population within 500 metres of a public transit stop":"Proportion of population within 500 metres of a public transit stop","Proportion of small-scale industries approved for a line of credit":"Proportion of small-scale industries approved for a line of credit","Proportion of small-scale industries approved for a term loan":"Proportion of small-scale industries approved for a term loan","Proportion of small-scale industries requesting a line of credit":"Proportion of small-scale industries requesting a line of credit","Proportion of small-scale industries requesting a term loan":"Proportion of small-scale industries requesting a term loan","Proportion of students achieving at least a minimum proficiency level in mathematics":"Proportion of students achieving at least a minimum proficiency level in mathematics","Proportion of students achieving at least a minimum proficiency level in reading":"Proportion of students achieving at least a minimum proficiency level in reading","Proportion of the rural population who live within 2 km of an all-season road":"Proportion of the rural population who live within 2 km of an all-season road","Proportion of the unemployed eligible for Employment Insurance benefits":"Proportion of the unemployed eligible for Employment Insurance benefits\n","Proportion of victimes of sexual violence in the previous 12 months who reported their victimization to police":"Proportion of victimes of sexual violence in the previous 12 months who reported their victimization to police","Proportion of victims of physical violence in the previous 12 months who reported their victimization to police":"Proportion of victims of physical violence in the previous 12 months who reported their victimization to police","Proportion of vulnerable persons receiving benefits":"Proportion of vulnerable persons receiving benefits","Proportion of women of reproductive age (aged 15 to 49 years) who have their need for family planning satisfied with modern methods":"Proportion of women of reproductive age (aged 15 to 49 years) who have their need for family planning satisfied with modern methods","Proportion of workers covered in case of employment injury":"Proportion of workers covered in case of employment injury","Proportion with share above 10%":"Proportion with share above 10%","Proportion with share above 25%":"Proportion with share above 25%","Protection and remediation of soil, groundwater and surface water":"Protection and remediation of soil, groundwater and surface water","Protection of biodiversity and habitat":"Protection of biodiversity and habitat","Protection of biodiversity and landscape":"Protection of biodiversity and landscape","Protein-energy malnutrition":"Protein-energy malnutrition","Province or territory":"Province or territory","Provincial Inventory Total":"Provincial Inventory Total","Psychologists":"Psychologists","Psychotherapists":"Psychotherapists","Public sector components":"Public sector components","Public transit":"Public transit","Quebec":"Quebec","Quebec Region":"Quebec Region","Quebec, QC":"Quebec, QC","Quebec, Quebec":"Quebec, Quebec","Québec (CMA), Que.":"Québec (CMA), Que.","Québec, Quebec":"Québec, Quebec","Rabies":"Rabies","Rail freight volume":"Rail freight volume","Rail passengers":"Rail passengers","Rate of growth":"Rate of growth","Rate per 1,000 females":"Rate per 1,000 females","Rate per 1,000 population":"Rate per 1,000 population","Rate per 1,000 uninfected population":"Rate per 1,000 uninfected population","Rate per 1,000,000":"Rate per 1,000,000","Rate per 10,000 population":"Rate per 10,000 population","Rate per 100,000":"Rate per 100,000","Rate per 100,000 population":"Rate per 100,000 population","Ratio":"Ratio","Ratio of land consumption rate to population growth rate":"Ratio of land consumption rate to population growth rate","Ratio of liquid assets to short-term liabilities":"Ratio of liquid assets to short-term liabilities","Ratio of non-performing loans net of provisions to capital":"Ratio of non-performing loans net of provisions to capital","Ratio of non-performing loans to total gross loans":"Ratio of non-performing loans to total gross loans","Ratio of regulatory capital to assets":"Ratio of regulatory capital to assets","Ratio of regulatory capital to risk-weighted assets":"Ratio of regulatory capital to risk-weighted assets","Ratio of unemployed receiving benefits":"Ratio of unemployed receiving benefits\n","Recent immigrants (10 years or less)":"Recent immigrants (10 years or less)","Recommended vaccines during pregnancy":"Recommended vaccines during pregnancy","Recommended vaccines for 14-year-old children":"Recommended vaccines for 14-year-old children","Recommended vaccines for 17-year-old children":"Recommended vaccines for 17-year-old children","Recommended vaccines for 2-year-old children":"Recommended vaccines for 2-year-old children","Recommended vaccines for 7-year-old children":"Recommended vaccines for 7-year-old children","Recreation, culture, and religion not elsewhere classified":"Recreation, culture, and religion not elsewhere classified","Red Deer, Alberta":"Red Deer, Alberta","Regina (CMA), Sask.":"Regina (CMA), Sask.","Regina, SK":"Regina, SK","Regina, Saskatchewan":"Regina, Saskatchewan","Registered nurses":"Registered nurses","Registered psychiatric nurses":"Registered psychiatric nurses","Regulated nurses":"Regulated nurses","Renter":"Renter","Renter in social and affordable housing":"Renter in social and affordable housing","Renter not in social and affordable housing":"Renter not in social and affordable housing","Reporting entity":"Reporting entity","Reptiles":"Reptiles","Request rate, line of credit":"Request rate, line of credit","Request rate, term loan":"Request rate, term loan","Reservoir extent":"Reservoir extent","Reservoirs, maximum water extent":"Reservoirs, maximum water extent","Reservoirs, maximum water extent dynamics":"Reservoirs, maximum water extent dynamics","Reservoirs, minimum water extent":"Reservoirs, minimum water extent","Reservoirs, minimum water extent dynamics":"Reservoirs, minimum water extent dynamics","Residential sources of diverted materials":"Residential sources of diverted materials","Residential sources of waste for disposal":"Residential sources of waste for disposal","Residual Soil Nitrogen":"Residual Soil Nitrogen","Resolution mechanism":"Resolution mechanism","Respiratory therapists":"Respiratory therapists","Retail sales and service supervisors and specialized occupations in sales and services":"Retail sales and service supervisors and specialized occupations in sales and services","Retail trade (NAICS 44-45)":"Retail trade (NAICS 44-45)","Retired":"Retired","Revenue generated and finance mobilized from biodiversity-relevant economic instruments":"Revenue generated and finance mobilized from biodiversity-relevant economic instruments","Risk mitigation mechanisms":"Risk mitigation mechanisms","Risk of Soil Erosion":"Risk of Soil Erosion","Risk of Soil Salinization":"Risk of Soil Salinization","Risk of Water Contamination by Coliforms":"Risk of Water Contamination by Coliforms","Risk of Water Contamination by Pesticides":"Risk of Water Contamination by Pesticides","Risk of water contamination by phosphorus":"Risk of water contamination by phosphorus","Road freight volume":"Road freight volume","Roads":"Roads","Robbery":"Robbery","Rotavirus":"Rotavirus","Rubber and plastics products":"Rubber and plastics products","Rubella":"Rubella","Rural":"Rural","Rural areas":"Rural areas","Rural communities":"Rural communities","Rural municipalities, population 1 to 4,999":"Rural municipalities, population 1 to 4,999","Rural municipalities, population 5,000 or more":"Rural municipalities, population 5,000 or more","Safely treated":"Safely treated","Saguenay (CMA), Que.":"Saguenay (CMA), Que.","Saguenay, Quebec":"Saguenay, Quebec","Saint John (CMA)":"Saint John (CMA)","Saint John (CMA), N.B.":"Saint John (CMA), N.B.","Saint John, New Brunswick":"Saint John, New Brunswick","Saint-Jérôme, Quebec":"Saint-Jérôme, Quebec","Sales and service occupations [6]":"Sales and service occupations [6]","Sales and service occupations, except management":"Sales and service occupations, except management","Sales and service representatives and other customer and personal services occupations":"Sales and service representatives and other customer and personal services occupations","Sales and service support occupations":"Sales and service support occupations","Salmonids":"Salmonids","Saskatchewan":"Saskatchewan","Saskatoon (CMA), Sask.":"Saskatoon (CMA), Sask.","Saskatoon, SK":"Saskatoon, SK","Saskatoon, Saskatchewan":"Saskatoon, Saskatchewan","Science type":"Science type","Scientific and technical services (NAICS 54)":"Scientific and technical services (NAICS 54)","Score":"Score","Scorpionflies":"Scorpionflies","Sea cucumbers":"Sea cucumbers","Sea urchins":"Sea urchins","Seasonal transition, new seasonal":"Seasonal transition, new seasonal","Seasonal transition, seasonal":"Seasonal transition, seasonal","Seasonal transition, seasonal to permanent":"Seasonal transition, seasonal to permanent","Seasonal water":"Seasonal water","Second decile":"Second decile","Second generation":"Second generation","Second quintile":"Second quintile","Secondary (high) school diploma or equivalency certificate":"Secondary (high) school diploma or equivalency certificate","Secondary (high) school diploma or equivalency certificate or less":"Secondary (high) school diploma or equivalency certificate or less","Sector":"Sector","Selected characteristic":"Selected characteristic","Selected demographic characteristics":"Selected demographic characteristics","Selected macrofungi":"Selected macrofungi","Selected sociodemographic characteristics":"Selected sociodemographic characteristics","Senior management occupations":"Senior management occupations","Separated or divorced women":"Separated or divorced women","Separated, divorced, or widowed":"Separated, divorced, or widowed","Service provider per 100,000 population":"Service provider per 100,000 population","Services":"Services","Severe":"Severe","Severity":"Severity","Sex":"Sex","Sex of accused":"Sex of accused","Sex unknown":"Sex unknown","Sexual abuse":"Sexual abuse","Sexual assault":"Sexual assault","Sexual assault level 1":"Sexual assault level 1","Sexual assault level 2 weapon or bodily harm":"Sexual assault level 2 weapon or bodily harm","Sexual assault level 3 aggravated":"Sexual assault level 3 aggravated","Sexual minority":"Sexual minority","Sexual orientation":"Sexual orientation","Sexual orientation not elsewhere classified":"Sexual orientation not elsewhere classified","Sexual orientation not stated":"Sexual orientation not stated","Sexual violence":"Sexual violence","Shared files using an online data storage space":"Shared files using an online data storage space","Sherbrooke (CMA), Que.":"Sherbrooke (CMA), Que.","Sherbrooke, Quebec":"Sherbrooke, Quebec","Shopping for goods or services":"Shopping for goods or services","Single Indigenous identity":"Single Indigenous identity","Single women":"Single women","Single, never married":"Single, never married","Size":"Size","Skill":"Skill","Skim Milk Powder":"Skim Milk Powder","Small and medium enterprises":"Small and medium enterprises","Small pelagics":"Small pelagics","Small population centres":"Small population centres","Small-scale food producers":"Small-scale food producers","Smokeless tobacco":"Smokeless tobacco","Social contributions":"Social contributions","Social sciences, humanities and the arts":"Social sciences, humanities and the arts","Social workers":"Social workers","Sociodemographic characteristics":"Sociodemographic characteristics","Soil Cover":"Soil Cover","Soil Organic Carbon Change":"Soil Organic Carbon Change","Soil Quality":"Soil Quality","Solar":"Solar","Sold carbon offset credits only or sold more than purchased":"Sold carbon offset credits only or sold more than purchased","Solid waste":"Solid waste","Source":"Source","Sources of materials prepared for recycling":"Sources of materials prepared for recycling","Sources of waste for disposal":"Sources of waste for disposal","South Asian":"South Asian","Southeast Asia and Oceania":"Southeast Asia and Oceania","Southeast Asian":"Southeast Asian","Southern Asia":"Southern Asia","Southern Ontario":"Southern Ontario","Southern Quebec":"Southern Quebec","Specialists":"Specialists","Specialized middle management occupations":"Specialized middle management occupations","Species group":"Species group","Species group or system":"Species group or system","Speech language pathologists":"Speech language pathologists","Spiders":"Spiders","Sponges":"Sponges","Square kilometers":"Square kilometers","St. Catharines - Niagara (CMA)":"St. Catharines - Niagara (CMA)","St. Catharines - Niagara (CMA), Ont.":"St. Catharines - Niagara (CMA), Ont.","St. Catharines - Niagara Falls, ON":"St. Catharines - Niagara Falls, ON","St. Catharines - Niagara Falls, Ontario":"St. Catharines - Niagara Falls, Ontario","St. Catharines - Niagara, Ontario":"St. Catharines - Niagara, Ontario","St. Catharines-Niagara, Ontario":"St. Catharines-Niagara, Ontario","St. John's (CMA), N.L.":"St. John's (CMA), N.L.","St. John's, NL":"St. John's, NL","St. John's, Newfoundland and Labrador":"St. John's, Newfoundland and Labrador","St. Johns (CMA)":"St. John's (CMA)","Standard Accounting Tools":"Standard Accounting Tools","Statistics":"Statistics","Statistics Canada":"Statistics Canada","Stimulant-related poisoning hospitalizations":"Stimulant-related poisoning hospitalizations","Stock group":"Stock group","Stoneflies":"Stoneflies","Storm - Unspecified / Other":"Storm - Unspecified / Other","Storm Surge":"Storm Surge","Storms and Severe Thunderstorms":"Storms and Severe Thunderstorms","Stormwater":"Stormwater","Sub-Saharan Africa":"Sub-Saharan Africa","Sub-indicator_A":"Sub-indicator A: Existence of an SPP policy/action plan and/or SPP regulatory requirements","Sub-indicator_B":"Sub-indicator B: The public procurement regulatory framework is conducive to SPP","Sub-indicator_C":"Sub-indicator C: Practical support delivered to procurement practitioners in the implementation of SPP","Sub-indicator_D":"Sub-indicator D: SPP purchasing criteria / buying standards / requirements","Sub-indicator_E":"Sub-indicator E: Existence of an SPP monitoring system","Sub-indicators":"Sub-indicators","Sudbury, Ontario":"Sudbury, Ontario","Supervisors and occupations in natural resources, agriculture and related production":"Supervisors and occupations in natural resources, agriculture and related production","Supervisors, central control and process operators in processing, manufacturing and utilities and aircraft assemblers and inspectors":"Supervisors, central control and process operators in processing, manufacturing and utilities and aircraft assemblers and inspectors","Support occupations in art, culture and sport":"Support occupations in art, culture and sport","System":"System","System of Environmental Economic Accounting Tables (SEEA)":"System of Environmental Economic Accounting Tables","Target - ODA as a share of GNI":"Target - ODA as a share of GNI","Target - Total ODA to least developed countries as a share of GNI":"Target - Total ODA to least developed countries as a share of GNI","Target population":"Target population","Taxes":"Taxes","Technical occupations in art, culture and sport":"Technical occupations in art, culture and sport","Technical occupations in health":"Technical occupations in health","Technical occupations related to natural and applied sciences":"Technical occupations related to natural and applied sciences","Technical trades and transportation officers and controllers":"Technical trades and transportation officers and controllers","Tenure":"Tenure","Terajoules":"Terajoules","Terajoules per million dollars of real GDP":"Terajoules per million dollars of real GDP","Terrestrial Key Biodiversity Areas":"Terrestrial Key Biodiversity Areas","Terrestrial index":"Terrestrial index","Territorial Inventory Total":"Territorial Inventory Total","Territories":"Territories","Tetanus":"Tetanus","Tetanus toxoid, reduced diphtheria toxoid and reduced acellular pertussis (Tdap)":"Tetanus toxoid, reduced diphtheria toxoid and reduced acellular pertussis (Tdap)","Textiles":"Textiles","Therapy and assessment professionals":"Therapy and assessment professionals","Third decile":"Third decile","Third generation or more":"Third generation or more","Thunder Bay (CMA), Ont.":"Thunder Bay (CMA), Ont.","Thunder Bay, Ontario":"Thunder Bay, Ontario","Tidal power turbine":"Tidal power turbine","Tier I":"Tier I","Tier II":"Tier II","Tier III":"Tier III","Tires":"Tires","Tobacco Product":"Tobacco Product","Tonnes (million)":"Tonnes (million)","Tonnes per capita":"Tonnes per capita","Tonnes per dollar":"Tonnes per dollar","Tornado":"Tornado","Toronto (CMA)":"Toronto (CMA)","Toronto (CMA), Ont.":"Toronto (CMA), Ont.","Toronto, ON":"Toronto, ON","Toronto, Ontario":"Toronto, Ontario","Total":"Total","Total - Age groups of the population - 100% data":"Total - Age groups of the population - 100% data","Total - Gender":"Total - Gender","Total - age of accused":"Total - age of accused","Total - all violations":"Total - all violations","Total - sex of accused":"Total - sex of accused","Total 15 to 29 years":"Total 15 to 29 years","Total Aboriginal identity":"Total Aboriginal identity","Total Census metropolitan area":"Total Census metropolitan area","Total Criminal Code":"Total Criminal Code","Total Non-Census metropolitan area":"Total Non-Census metropolitan area","Total Number":"Total Number","Total ODA to least developed countries as a share of GNI":"Total ODA to least developed countries as a share of GNI","Total age groups":"Total age groups","Total cultural and natural heritage":"Total cultural and natural heritage","Total deciles":"Total deciles","Total electricity production from biomass":"Total electricity production from biomass","Total employees - all occupations":"Total employees - all occupations","Total employees, all occupations":"Total employees, all occupations","Total hydro, tidal, wind, solar and other generation":"Total hydro, tidal, wind, solar and other generation","Total intimate partner violence":"Total intimate partner violence","Total manufacturing":"Total manufacturing","Total offences":"Total offences","Total other violations causing death":"Total other violations causing death","Total other violent violations":"Total other violent violations","Total participation rate":"Total participation rate","Total population":"Total population","Total robbery":"Total robbery","Total sciences":"Total sciences","Total sexual violations against children":"Total sexual violations against children","Total value of the supported investment projects":"Total value of the supported investment projects","Total visible minority population":"Total visible minority population","Total volume of municipal and manufacturing wastewater safely treated":"Total volume of municipal and manufacturing wastewater safely treated","Total, 12 years and over":"Total, 12 years and over","Total, 15 years and over":"Total, 15 years and over","Total, 25 to 64 years":"Total, 25 to 64 years","Total, Internet users aged 15 years and over":"Total, Internet users aged 15 years and over","Total, LGBTQ2+ and non-LGBTQ2+ people":"Total, LGBTQ2+ and non-LGBTQ2+ people","Total, Organisation for Economic Co-operation and Development (OECD)":"Total, Organisation for Economic Co-operation and Development (OECD)","Total, age":"Total, age","Total, all education levels":"Total, all education levels","Total, all persons":"Total, all persons","Total, all women":"Total, all women","Total, by Indigenous identity":"Total, by Indigenous identity","Total, by immigrant status":"Total, by immigrant status","Total, by main activity":"Total, by main activity","Total, by visible minority group":"Total, by visible minority group","Total, disability status":"Total, disability status","Total, environmental protection activities":"Total, environmental protection activities","Total, gender":"Total, gender","Total, highest certificate, diploma or degree":"Total, highest certificate, diploma or degree","Total, highest certificate, diploma or degree completed":"Total, highest certificate, diploma or degree completed","Total, immigrant status":"Total, immigrant status","Total, in education":"Total, in education","Total, in education and not in education":"Total, in education and not in education","Total, industries":"Total, industries","Total, large urban population centres":"Total, large urban population centres","Total, location":"Total, location","Total, not in education":"Total, not in education","Total, not in employment, education or training (NEET)":"Sub-total, not in employment, education or training (NEET)","Total, persons aged 15 years and over":"Total, persons aged 15 years and over","Total, persons with and without a disability, difficulty or long-term condition":"Total, persons with and without a disability, difficulty or long-term condition","Total, sexual orientation":"Total, sexual orientation","Total, tenure":"Total, tenure","Total, type of institution attended":"Total, type of institution attended","Total, unpaid work activities":"Total, unpaid work activities","Total, urban and rural areas":"Total, urban and rural areas","Total, visible minority population":"Total, visible minority population","Tourism":"Tourism","Tourism Satellite Account Tables (TSA)":"Tourism Satellite Account Tables","Trades - transport and equipment operators and related occupations [7]":"Trades - transport and equipment operators and related occupations [7]","Trades, transport and equipment operators and related occupations, except management":"Trades, transport and equipment operators and related occupations, except management","Transport":"Transport","Transport accidents":"Transport accidents","Transportation and warehousing (NAICS 48-49)":"Transportation and warehousing (NAICS 48-49)","Transportation equipment manufacturing":"Transportation equipment manufacturing","Treated":"Treated","Trend score":"Trend score","Trois-Rivieres, Quebec":"Trois-Rivières (CMA), Que.","Trois-Rivières (CMA), Que.":"Trois-Rivières (CMA), Que.","Trois-Rivières, Quebec":"Trois-Rivières, Quebec","Truro (CA)":"Truro (CA)","Tsunami":"Tsunami","Type of charging stations":"Type of charging stations","Type of childhood maltreatment":"Type of childhood maltreatment","Type of court":"Type of court","Type of cyber-related violation":"Type of cyber-related violation","Type of disease":"Type of disease","Type of e-cigarettes":"Type of e-cigarettes","Type of electricity generation":"Type of electricity generation","Type of event":"Type of event","Type of institution attended":"Type of institution attended","Type of intimate partner violence":"Type of intimate partner violence","Type of materials diverted":"Type of materials diverted","Type of municipality by population size":"Type of municipality by population size","Type of natural disaster":"Type of natural disaster","Type of occupation":"Type of occupation","Type of perpetrator":"Type of perpetrator","Type of victimization":"Type of victimization","Type of work":"Type of work","US dollar (millions)":"US dollar (millions)","US dollar, Millions, 2021 constant prices":"US dollar, Millions, 2021 constant prices","US dollar, Millions, 2022 constant prices":"US dollar, Millions, 2022 constant prices","US dollar, Millions, 2023 constant prices":"US dollar, Millions, 2023 constant prices","USD Millions":"USD Millions","USD per cubic metre":"USD per cubic metre","Under 1 year":"Under 1 year","Under 18 years":"Under 18 years","Under 35 years":"Under 35 years","Undeveloped":"Undeveloped","Unemployed, Not in employment, education or training (NEET)":"Unemployed, Not in employment, education or training (NEET)","Units":"Units","University":"University","University certificate or diploma":"University certificate or diploma","University certificate or diploma above bachelor level":"University certificate or diploma above bachelor level","University certificate or diploma below bachelor level":"University certificate or diploma below bachelor level","Unknown":"Unknown","Unmarried":"Unmarried","Unpaid household work":"Unpaid household work","Unwanted or inappropriate behaviour":"Unwanted or inappropriate behaviour","Unwanted or inappropriate behaviour in public":"Unwanted or inappropriate behaviour in public","Unwanted or inappropriate behaviour in the workplace":"Unwanted or inappropriate behaviour in the workplace","Unwanted or inappropriate behaviour online":"Unwanted or inappropriate behaviour online","Uploaded files or photos to an online data storage space":"Uploaded files or photos to an online data storage space","Upper secondary and post-secondary non-tertiary":"Upper secondary and post-secondary non-tertiary","Upper secondary education":"Upper secondary education","Urban":"Urban","Urban areas":"Urban areas","Urban centres":"Urban centres","Urban municipalities, population 1 to 4,999":"Urban municipalities, population 1 to 4,999","Urban municipalities, population 30,000 or more":"Urban municipalities, population 30,000 or more","Urban municipalities, population 5,000 to 29,999":"Urban municipalities, population 5,000 to 29,999","Use with caution":"Use with caution","Used software to edit photos, video or audio files":"Used software to edit photos, video or audio files","Used spreadsheet software advanced functions to organize and analyze data":"Used spreadsheet software advanced functions to organize and analyze data","Used spreadsheet software basic functions":"Used spreadsheet software basic functions","Used the Internet to transfer photos or videos from one device to another":"Used the Internet to transfer photos or videos from one device to another","Used word processing software":"Used word processing software","Used your smartphone as a GPS device for directions":"Used your smartphone as a GPS device for directions","Uttering threats":"Uttering threats","Value":"Value","Values showing as 2.5 may signify a prevalence of undernourishment below 2.5%":"Values showing as 2.5 may signify a prevalence of undernourishment below 2.5%","Vancouver (CMA)":"Vancouver (CMA)","Vancouver (CMA), B.C.":"Vancouver (CMA), B.C.","Vancouver, BC":"Vancouver, BC","Vancouver, British Columbia":"Vancouver, British Columbia","Vaping":"Vaping","Varicella":"Varicella","Vascular plants":"Vascular plants","Very recent immigrants (5 years or less)":"Very recent immigrants (5 years or less)","Victoria (CMA)":"Victoria (CMA)","Victoria (CMA), B.C.":"Victoria (CMA), B.C.","Victoria, BC":"Victoria, BC","Victoria, British Columbia":"Victoria, British Columbia","Violations":"Violations","Visible minority":"Visible minority","Visible minority n.i.e":"Visible minority n.i.e","Visible minority population":"Visible minority population","Visible minority, not included elsewhere":"Visible minority, not included elsewhere","Volcano":"Volcano","Waste":"Waste","Wastewater":"Wastewater","Wastewater discharge from manufacturing industries":"Wastewater discharge from manufacturing industries","Wastewater discharged from municipal sewage systems":"Wastewater discharged from municipal sewage systems","Wastewater management":"Wastewater management","Wastewater treatment level":"Wastewater treatment level","Water Quality":"Water Quality","Water pipe with tobacco":"Water pipe with tobacco","Water quality":"Water quality","Water supply and sanitation":"Water supply and sanitation","Water-use efficiency (USD per cubic metre)":"Water-use efficiency (USD per cubic metre)","West Asian":"West Asian","West Central Asia and the Middle East":"West Central Asia and the Middle East","Wetlands area":"Wetlands area","White goods":"White goods","Whitehorse (CA)":"Whitehorse (CA)","Whitehorse Yukon":"Whitehorse Yukon","Whitehorse, YT":"Whitehorse, YT","Wholesale trade (NAICS 41)":"Wholesale trade (NAICS 41)","Wildfire":"Wildfire","Wildlife Habitat on Farmland":"Wildlife Habitat on Farmland","Wind power turbine":"Wind power turbine","Windsor (CMA), Ont.":"Windsor (CMA), Ont.","Windsor, ON":"Windsor, ON","Windsor, Ontario":"Windsor, Ontario","Winnipeg (CMA), Man.":"Winnipeg (CMA), Man.","Winnipeg Manitoba":"Winnipeg Manitoba","Winnipeg, MB":"Winnipeg, MB","Winnipeg, Manitoba":"Winnipeg, Manitoba","Winter Storm":"Winter Storm","With nicotine":"With nicotine","Without nicotine":"Without nicotine","Women":"Women","Women designated as visible minorities":"Women designated as visible minorities","Women of reproductive age":"Women of reproductive age","Women with disability":"Women with disability","Women+":"Women+","Wood product manufacturing":"Wood product manufacturing","Wood products, excluding furniture":"Wood products, excluding furniture","Workers and labourers in natural resources, agriculture and related production":"Workers and labourers in natural resources, agriculture and related production","Working at a paid job or business":"Working at a paid job or business","Written code in a programming language":"Written code in a programming language","Year":"Year","Yellowjacket wasps":"Yellowjacket wasps","Yellowknife (CA)":"Yellowknife (CA)","Yellowknife Northwest Territories":"Yellowknife Northwest Territories","Yellowknife, NT":"Yellowknife, NT","Young people aged 15 years achieving at least a minimum proficiency level in mathematics":"Young people aged 15 years achieving at least a minimum proficiency level in mathematics","Young people aged 15 years achieving at least a minimum proficiency level in reading":"Young people aged 15 years achieving at least a minimum proficiency level in reading","Younger than 30 years old":"Younger than 30 years old","Youth courts":"Youth courts","Yukon":"Yukon","Yukon and Northwest Territories":"Yukon and Northwest Territories","Yukon, Northwest Territories and Nunavut":"Yukon, Northwest Territories and Nunavut","_Physical assault":"Physical assault"};</script>
+
+
+<div class="container">
+  
+<nav>
+    <ol aria-label="breadcrumb" class="breadcrumb" style="--bs-breadcrumb-divider: '&rsaquo;';">
+        
+        <li class="breadcrumb-item">
+            <a href="/">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="/goals">Goals</a>
+        </li>
+        
+        <li class="breadcrumb-item">
+            <a href="/6/"
+               title="Goal 6 - Clean water and sanitation"
+               aria-label="Goal  - ">
+               Goal 6
+            </a>
+        </li>
+        
+    </ol>
+</nav>
+
+
+  
+    
+<div class="previous-next-links d-flex justify-content-between">
+    <div class="text-left">
+        <a class="btn btn-primary" href="/6-5-2/" aria-labelledby="previous-link">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+            <span id="previous-link" class="d-none d-md-inline">Previous indicator</span>
+        </a>
+    </div>
+    <div class="text-right">
+        <a class="btn btn-primary" href="/6-a-1/" aria-labelledby="next-link">
+            <span id="next-link" class="d-none d-md-inline">Next indicator</span>
+            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+
+
+  
+</div>
+<div class="heading goal-banner indicator goal-6">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-4 col-md-3 col-lg-2 goal-icon goal-tiles">
+                <a href="/6/" aria-label="View targets and indicators for Goal 6" title="View targets and indicators for Goal 6">
+                    <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/6.png"
+                        alt="Clean water and sanitation - Goal 6"
+                        id="goal-6"
+                        class="goal-icon-image goal-icon-image-" />
+                </a>
+            </div>
+            <div class="col-8 col-md-9 col-lg-10 indicator-details">
+            
+                <div>
+                    <h1>
+                        
+                        Indicator 6.6.1
+                        
+                        <span class="lead-copy">Change in the extent of water-related ecosystems over time</span>
+                    </h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="main-content" class="container goal-6" role="main">
+  
+<div class="row alert success" id="data-notice">
+  <div class="col-xs-2 col-sm-1">
+    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+  </div>
+  <div class="col-xs-10 col-sm-11 data-notice">
+    <div class="notice-heading" role="alert"><p>Exploring data sources</p>
+</div>
+    <div><p>Statistics Canada has not yet found any suitable data sources to report on this indicator.<br />Please <a href="mailto:statcan.sdg-odd.statcan@statcan.gc.ca">contact us</a> if you have any suggestions.</p>
+</div>
+  </div>
+</div>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+<div class="row"
+  id="indicatorData"
+  data-indicatorid='indicator_6-6-1'
+  data-id="6-6-1"
+  data-country="Canada"
+  data-charttitle="Change in the extent of water-related ecosystems over time"
+  data-charttitles="[]"
+  data-measurementunit="Percentage (%)"
+  data-xaxislabel=""
+  data-showdata="false"
+  data-graphtype="line"
+  data-graphtypes="null"
+  data-geocoderegex=""
+  data-showmap="false"
+  data-startvalues="null"
+  data-graphlimits="[]"
+  data-stackeddisaggregation=""
+  data-graphannotations="[]"
+  data-graphtargetlines="null"
+  data-graphseriesbreaks="null"
+  data-indicatordownloads="null"
+  data-dataschema="{&quot;fields&quot;:[{&quot;name&quot;:&quot;Year&quot;,&quot;type&quot;:&quot;string&quot;,&quot;title&quot;:&quot;Year&quot;},{&quot;name&quot;:&quot;Series&quot;,&quot;type&quot;:&quot;string&quot;,&quot;constraints&quot;:{&quot;enum&quot;:[&quot;Number of (shared) basins showing high surface-water extent changes&quot;,&quot;Permanent water&quot;,&quot;Seasonal water&quot;,&quot;Reservoir extent&quot;,&quot;Wetlands area&quot;,&quot;Lake water quality, turbidity&quot;,&quot;Lake water quality, trophic&quot;,&quot;&quot;]},&quot;title&quot;:&quot;Series&quot;},{&quot;name&quot;:&quot;Units&quot;,&quot;type&quot;:&quot;string&quot;,&quot;constraints&quot;:{&quot;enum&quot;:[&quot;Percentage (%)&quot;,&quot;Number&quot;,&quot;Square kilometers&quot;,&quot;&quot;]},&quot;title&quot;:&quot;Units&quot;},{&quot;name&quot;:&quot;Water extent&quot;,&quot;type&quot;:&quot;string&quot;,&quot;constraints&quot;:{&quot;enum&quot;:[&quot;Maximum&quot;,&quot;Minimum&quot;,&quot;&quot;]},&quot;title&quot;:&quot;Water extent&quot;},{&quot;name&quot;:&quot;Water quality&quot;,&quot;type&quot;:&quot;string&quot;,&quot;constraints&quot;:{&quot;enum&quot;:[&quot;Low&quot;,&quot;Medium&quot;,&quot;High&quot;,&quot;Extreme&quot;,&quot;&quot;]},&quot;title&quot;:&quot;Water quality&quot;},{&quot;name&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;number&quot;,&quot;title&quot;:&quot;Value&quot;}]}"
+  data-compositebreakdownlabel=""
+  data-precision="[]"
+  data-proxy=""
+  data-proxyseries="null"
+>
+  
+  <div id="indicator-main" class="indicator-main col-md-12">
+  
+  <div class="mt-4">
+<ul class="nav nav-tabs" role="tablist">
+    
+        <li role="presentation" class="nav-item">
+    <button type="button" class="nav-link active" data-bs-toggle="tab" id="tab-national" data-bs-target="#national" aria-controls="national" role="tab" data-on="click"
+data-event-category="Tab change"
+data-event-action="Change metadata view"
+data-event-label="Change to National Metadata tab"
+>National Metadata</button>
+</li>
+
+<li role="presentation" class="nav-item">
+    <button type="button" class="nav-link" data-bs-toggle="tab" id="tab-global" data-bs-target="#global" aria-controls="global" role="tab" data-on="click"
+data-event-category="Tab change"
+data-event-action="Change metadata view"
+data-event-label="Change to Global Metadata tab"
+>Global Metadata</button>
+</li>
+
+<li role="presentation" class="nav-item">
+    <button type="button" class="nav-link" data-bs-toggle="tab" id="tab-sources" data-bs-target="#sources" aria-controls="sources" role="tab" data-on="click"
+data-event-category="Tab change"
+data-event-action="Change metadata view"
+data-event-label="Change to Sources tab"
+>Sources</button>
+</li>
+  
+    
+    
+</ul>
+
+<div class="tab-content">
+    
+        <div role="tabpanel" class="tab-pane active" id="national">
+    <!-- National Metadata -->
+    <div>
+        <article>
+            <p>
+                
+                
+                The table below contains more information regarding the indicator.
+            </p>
+            <table class="table metadata-content">
+  <tbody>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      
+      
+      
+        
+          
+      
+      
+      
+      
+      <tr>
+        <th scope="row">Goal </th>
+        <td>
+          
+            <p>Goal 6: Ensure availability and sustainable management of water and sanitation for all</p>
+
+          
+        </td>
+        </tr>
+        
+      
+  
+      
+      
+      
+      
+      <tr>
+        <th scope="row">Target </th>
+        <td>
+          
+            <p>Target 6.6: By 2030 protect and restore water-related ecosystems, including mountains, forests, wetlands, rivers, aquifers and lakes</p>
+
+          
+        </td>
+        </tr>
+        
+      
+  
+      
+      
+      
+      
+      <tr>
+        <th scope="row">Indicator </th>
+        <td>
+          
+            <p>Indicator 6.6.1: Change in the extent of water-related ecosystems over time</p>
+
+          
+        </td>
+        </tr>
+        
+      
+  
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+      
+      <tr>
+        <th scope="row">Definition and concepts </th>
+        <td>
+          
+            <p>SDG indicator 6.6.1 tracks the extent to which different types of water-related ecosystems are changing in extent over time. The indicator is multifaceted capturing data on different types of freshwater ecosystems and to measure extent change the indicator considers spatial area changes, water quality and water quantity changes. The indicator uses satellite-based Earth observations to globally monitor different freshwater ecosystems types.</p>
+
+          
+        </td>
+        </tr>
+        
+      
+  
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+      
+      <tr>
+        <th scope="row">Comment and limitations </th>
+        <td>
+          
+            
+
+          
+        </td>
+        </tr>
+        
+      
+  
+      
+      
+      
+      
+      <tr>
+        <th scope="row">Method of computation </th>
+        <td>
+          
+            
+
+          
+        </td>
+        </tr>
+        
+      
+  
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </tbody>
+</table>
+
+        </article>
+    </div>
+</div>
+<div role="tabpanel" class="tab-pane" id="global">
+    <!-- Global Metadata -->
+    <div>
+        <article>
+            <p>This table provides information on metadata for SDG indicators as defined by the UN Statistical Commission. <a href="https://unstats.un.org/sdgs/metadata/">Complete global metadata</a> is provided by the UN Statistics Division.</p>
+            <table class="table metadata-content">
+  <tbody>
+  
+      
+      
+      
+        
+          
+      
+      
+      
+      
+      <tr>
+        <th scope="row">Goal </th>
+        <td>
+          
+            <p>Goal 6: Ensure availability and sustainable management of water and sanitation for all</p>
+
+          
+        </td>
+        </tr>
+        
+      
+  
+      
+      
+      
+      
+      <tr>
+        <th scope="row">Target </th>
+        <td>
+          
+            <p>Target 6.6: By 2030 protect and restore water-related ecosystems, including mountains, forests, wetlands, rivers, aquifers and lakes</p>
+
+          
+        </td>
+        </tr>
+        
+      
+  
+      
+      
+      
+      
+      <tr>
+        <th scope="row">Indicator </th>
+        <td>
+          
+            <p>Indicator 6.6.1: Change in the extent of water-related ecosystems over time</p>
+
+          
+        </td>
+        </tr>
+        
+      
+  
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+        
+          
+      
+      
+      
+      
+      <tr>
+        <th scope="row">UN designated tier </th>
+        <td>
+          
+            <p>Tier I</p>
+
+          
+        </td>
+        </tr>
+        
+      
+  
+      
+      
+      
+      
+      <tr>
+        <th scope="row">UN custodian agency </th>
+        <td>
+          
+            <p>United Nations Environment Programme (UNEP), Secretariat of the Ramsar Convention on Wetlands</p>
+
+          
+        </td>
+        </tr>
+        
+      
+  
+      
+      
+      
+      
+      <tr>
+        <th scope="row">Link to UN metadata </th>
+        <td>
+          
+            
+            
+            
+            
+            
+              <a href="https://unstats.un.org/sdgs/metadata/?Text=&Goal=6&Target=6.6" target="_blank">
+                United Nations Sustainable Development Goals Metadata <span class="visuallyhidden">opens in a new window</span>
+              </a>
+            
+
+          
+        </td>
+        </tr>
+        
+      
+  
+      
+      
+      
+      
+      
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  </tbody>
+</table>
+
+        </article>
+    </div>
+</div>
+<div role="tabpanel" class="tab-pane" id="sources">
+    <!-- Count the non-empty sources (up to 5) -->
+
+
+
+
+
+</div>
+    
+    
+</div>
+
+</div>
+  </div>
+</div>
+
+  <a href="#top">Back to top</a>
+</div>
+
+<footer role="contentinfo">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div id="footerLinks">
+                    <ul>
+                        <li>
+                            <a href="https://open-sdg.org">Built using Open SDG</a>
+                        </li>
+                        
+                        <li>
+                            
+                            <a href="mailto:statcan.sdg-odd.statcan@statcan.gc.ca" target="_blank">Contact us</a>
+                            
+                        </li>
+                        <li>
+                            
+                            <a href="https://www.facebook.com/StatisticsCanada/" target="_blank">Facebook</a>
+                            
+                        </li>
+                        <li>
+                            
+                            <a href="https://instagram.com/statcan_eng/" target="_blank">Instagram</a>
+                            
+                        </li>
+                        <li>
+                            
+                            <a href="https://ca.linkedin.com/company/statcan" target="_blank">LinkedIn</a>
+                            
+                        </li>
+                        <li>
+                            
+                            <a href="https://www.reddit.com/user/StatCanada/" target="_blank">Reddit</a>
+                            
+                        </li>
+                        <li>
+                            
+                            <a href="https://x.com/StatCan_eng" target="_blank">X (formerly Twitter)</a>
+                            
+                        </li>
+                        <li>
+                            
+                            <a href="https://www.youtube.com/statisticscanada" target="_blank">YouTube</a>
+                            
+                        </li>
+                        <li>
+                            
+                            <a href="https://www.statcan.gc.ca/en/start" target="_blank">Statistics Canada</a>
+                            
+                        </li>
+                        <li>
+                            <a href="/about/cookies-and-privacy/">Cookies</a>
+                            
+                        </li>
+                        
+                        
+                        </ul>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js" integrity="sha384-ficRBwtap/VLzILv81vIvgp30PoJYnlCm96tPpNYHXAf+h9SIThOZxxIzRUzbpAh" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js" integrity="sha384-jIAE3P7Re8BgMkT0XOtfQ6lzZgbDw/02WeRMJvXK3WMHBNynEx5xofqia1OHuGh0" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js" integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js" integrity="sha256-Y26AMvaIfrZ1EQU49pf6H4QzVTrOI8m9wQYKkftBt4s=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/patternomaly@1.3.2/dist/patternomaly.js" integrity="sha384-kdgUFNEbslNOEAQ/zFH9wjDORAbvN0KUYOpfJIJYPdjtzLXkZsMJAXU9HPpi5B5c" crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.2.2/dist/chartjs-plugin-annotation.min.js" integrity="sha256-XuHhf6q+GD7fscc96mTm/228GXf1Nn9wOYOE0EgeFzY=" crossorigin="anonymous"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha384-eEX5kO4tdQpY+eTjDbZNPlMm4QhsK+kosSZtkzp+uZk0L5g0lSzmWXWHzKDoOzA7" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.3/dist/html2canvas.js" integrity="sha384-3qyhlVVDXXiWhzgKIoL/aw+uaXN5kyAFE0Jv2LGoV+nnQnum4ebt1QAtRbjnz9pL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js" integrity="sha384-KQ8aykg/lc6595wSrMplFVs4kRS66x+EdkX7EQsJ2Pe6FX7l3tMqyD1Am0c2dKBG" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+<script>translations['general'] = translations['general'] || {};
+    translations['general']['hide'] = 'hide';</script>
+
+<script>translations['search'] = translations['search'] || {};
+    translations['search']['search'] = 'Search';</script>
+
+<script src='/assets/js/sdg.js?v=20250414190427'></script>
+
+
+    
+    
+    <script src="/assets/js/custom.js?v=20250414190427"></script><script>
+    new indicatorInit();
+    new accessibilitySwitcher();
+</script>
+
+
+</body>
+</html>
