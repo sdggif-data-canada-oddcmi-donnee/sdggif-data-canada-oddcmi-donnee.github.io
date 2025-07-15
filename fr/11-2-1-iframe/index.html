@@ -142,7 +142,7 @@ var translations = {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link res="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
-        <link rel="stylesheet" href="/assets/css/style.css?v=20250710174907">
+        <link rel="stylesheet" href="/assets/css/style.css?v=20250715204212">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
@@ -284,6 +284,18 @@ layout-indicator-iframe
 </div>
 <div id="main-content" class="container goal-11" role="main">
   
+<div class="row alert warning" id="data-notice">
+  <div class="col-xs-2 col-sm-1">
+    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+  </div>
+  <div class="col-xs-10 col-sm-11 data-notice">
+    <div class="notice-heading" role="alert"><p>Données actuellement indisponibles</p>
+</div>
+    <div><p>Les données pour cet indicateur sont actuellement en cours de révision par Statistique Canada. Les données révisées seront disponibles en automne 2025.<br />Veuillez <a href="mailto:statcan.sdg-odd.statcan@statcan.gc.ca">communiquer avec nous</a> si vous avez des questions.</p>
+</div>
+  </div>
+</div>
+
 
   
 <div class="row metadata-available-indicator">
@@ -325,11 +337,11 @@ layout-indicator-iframe
   data-charttitles="[]"
   data-measurementunit="Pourcentage (%)"
   data-xaxislabel=""
-  data-showdata="true"
+  data-showdata="false"
   data-graphtype="bar"
   data-graphtypes="null"
   data-geocoderegex=""
-  data-showmap="true"
+  data-showmap="false"
   data-startvalues="[{&quot;field&quot;:&quot;Distance-capacité de la zone de service de transport public&quot;,&quot;value&quot;:&quot;500 mètres des arrêts de transport en commun à faible capacité uniquement&quot;},{&quot;field&quot;:&quot;Distance-capacité de la zone de service de transport public&quot;,&quot;value&quot;:&quot;1000 mètres des arrêts de transport en commun à grande capacité uniquement&quot;},{&quot;field&quot;:&quot;Géographie&quot;,&quot;value&quot;:&quot;Canada&quot;},{&quot;field&quot;:&quot;Emplacement&quot;,&quot;value&quot;:&quot;Total, emplacement&quot;},{&quot;field&quot;:&quot;Genre&quot;,&quot;value&quot;:&quot;Total, genre&quot;},{&quot;field&quot;:&quot;Démographique and socio-économique&quot;,&quot;value&quot;:&quot;Total - Groupes d'âge de la population - Données intégrales (100 %)&quot;}]"
   data-graphlimits="[]"
   data-stackeddisaggregation=""
@@ -337,377 +349,14 @@ layout-indicator-iframe
   data-graphtargetlines="null"
   data-graphseriesbreaks="null"
   data-indicatordownloads="null"
-  data-dataschema="{&quot;fields&quot;:[{&quot;name&quot;:&quot;Year&quot;,&quot;type&quot;:&quot;integer&quot;,&quot;title&quot;:&quot;Année&quot;},{&quot;name&quot;:&quot;Distance-capacity public transit service area&quot;,&quot;type&quot;:&quot;string&quot;,&quot;constraints&quot;:{&quot;enum&quot;:[&quot;500 mètres de tous les arrêts de transport en commun&quot;,&quot;500 mètres des arrêts de transport en commun à faible capacité uniquement&quot;,&quot;1000 mètres des arrêts de transport en commun à grande capacité uniquement&quot;,&quot;&quot;]},&quot;title&quot;:&quot;Distance-capacité de la zone de service de transport public&quot;},{&quot;name&quot;:&quot;Geography&quot;,&quot;type&quot;:&quot;string&quot;,&quot;constraints&quot;:{&quot;enum&quot;:[&quot;Canada&quot;,&quot;Terre-Neuve-et-Labrador&quot;,&quot;St. John's, Terre-Neuve-et-Labrador&quot;,&quot;Île-du-Prince-Édouard&quot;,&quot;Nouvelle-Écosse&quot;,&quot;Halifax, Nouvelle-Écosse&quot;,&quot;Nouveau-Brunswick&quot;,&quot;Fredericton, Nouveau-Brunswick&quot;,&quot;Moncton, Nouveau-Brunswick&quot;,&quot;Saint John, Nouveau-Brunswick&quot;,&quot;Québec&quot;,&quot;Drummondville, Québec&quot;,&quot;Montréal, Québec&quot;,&quot;Ottawa - Gatineau (partie du Québec), Québec&quot;,&quot;L'Ange-Gardien, Québec&quot;,&quot;Québec, Québec&quot;,&quot;Saguenay, Québec&quot;,&quot;Sherbrooke, Québec&quot;,&quot;Trois-Rivières, Québec&quot;,&quot;Ontario&quot;,&quot;Barrie, Ontario&quot;,&quot;Belleville - Quinte West, Ontario&quot;,&quot;Brantford, Ontario&quot;,&quot;Grand Sudbury, Ontario&quot;,&quot;Guelph, Ontario&quot;,&quot;Hamilton, Ontario&quot;,&quot;Kingston, Ontario&quot;,&quot;Kitchener - Cambridge - Waterloo, Ontario&quot;,&quot;London, Ontario&quot;,&quot;Oshawa, Ontario&quot;,&quot;Ottawa - Gatineau (partie de l'Ontario), Ontario&quot;,&quot;Peterborough, Ontario&quot;,&quot;St. Catharines - Niagara, Ontario&quot;,&quot;Thunder Bay, Ontario&quot;,&quot;Toronto, Ontario&quot;,&quot;Windsor, Ontario&quot;,&quot;Manitoba&quot;,&quot;Winnipeg, Manitoba&quot;,&quot;Saskatchewan&quot;,&quot;Regina, Saskatchewan&quot;,&quot;Saskatoon, Saskatchewan&quot;,&quot;Alberta&quot;,&quot;Calgary, Alberta&quot;,&quot;Edmonton, Alberta&quot;,&quot;Lethbridge, Alberta&quot;,&quot;Red Deer, Alberta&quot;,&quot;Colombie-Britannique&quot;,&quot;Abbotsford - Mission, Colombie-Britannique&quot;,&quot;Chilliwack, Colombie-Britannique&quot;,&quot;Kamloops, Colombie-Britannique&quot;,&quot;Kelowna, Colombie-Britannique&quot;,&quot;Nanaimo, Colombie-Britannique&quot;,&quot;Vancouver, Colombie-Britannique&quot;,&quot;Victoria, Colombie-Britannique&quot;,&quot;Yukon&quot;,&quot;Territoires du Nord-Ouest&quot;,&quot;&quot;]},&quot;title&quot;:&quot;Géographie&quot;},{&quot;name&quot;:&quot;Location&quot;,&quot;type&quot;:&quot;string&quot;,&quot;constraints&quot;:{&quot;enum&quot;:[&quot;Total, emplacement&quot;,&quot;Urbain&quot;,&quot;Rural&quot;,&quot;&quot;]},&quot;title&quot;:&quot;Emplacement&quot;},{&quot;name&quot;:&quot;Gender&quot;,&quot;type&quot;:&quot;string&quot;,&quot;constraints&quot;:{&quot;enum&quot;:[&quot;Total, genre&quot;,&quot;Hommes+&quot;,&quot;Femmes+&quot;,&quot;&quot;]},&quot;title&quot;:&quot;Genre&quot;},{&quot;name&quot;:&quot;Demographic and socio-economic&quot;,&quot;type&quot;:&quot;string&quot;,&quot;constraints&quot;:{&quot;enum&quot;:[&quot;Total - Groupes d'âge de la population - Données intégrales (100 %)&quot;,&quot;0 to 14 years&quot;,&quot;15 à 64 ans&quot;,&quot;15 à 19 ans&quot;,&quot;20 à 24 ans&quot;,&quot;65 ans et plus&quot;,&quot;&quot;]},&quot;title&quot;:&quot;Démographique and socio-économique&quot;},{&quot;name&quot;:&quot;GeoCode&quot;,&quot;type&quot;:&quot;string&quot;,&quot;title&quot;:&quot;GeoCode&quot;},{&quot;name&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;number&quot;,&quot;title&quot;:&quot;Valeur&quot;}]}"
+  data-dataschema="{&quot;fields&quot;:[{&quot;name&quot;:&quot;Year&quot;,&quot;type&quot;:&quot;number&quot;,&quot;title&quot;:&quot;Année&quot;},{&quot;name&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;number&quot;,&quot;title&quot;:&quot;Valeur&quot;}]}"
   data-compositebreakdownlabel=""
   data-precision="[]"
   data-proxy="proxy"
   data-proxyseries="null"
 >
   
-  <span role="status" class="visually-hidden" id="indicator-data-view-status"></span>
-  <span role="status" class="visually-hidden" id="indicator-data-unit-status"></span>
-  <span role="status" class="visually-hidden" id="indicator-data-series-status"></span>
-  <div id="indicator-sidebar" class="indicator-sidebar col-md-3">
-    <div id="serieses"></div>
-<div id="units"></div>
-<div id="toolbar">
-  <span id="series-help">
-    <h4>Sous-catégories</h4>
-    <p>Choisissez des catégories dans les listes déroulantes ci-dessous pour voir différentes répartitions des données. Certaines ne seront pas disponibles jusqu&#39;à ce qu&#39;un niveau supérieur soit choisi.</p>
-  </span>
-  <div id="fields">
-    <p class="async-loading" data-img="/assets/img/loading-small.gif"></p>
-  </div>
-</div>
-
-  </div>
-  <div id="indicator-main" class="indicator-main col-md-9">
-    
-
-
-
-
-<div id="headlineTable">
-
-  <div id="datatables">
-
-    
-    <a role="button" href="https://sdggif-data-canada-oddcmi-donnee.github.io/canada-gif-production-data/fr/data/11-2-1.csv" class="btn btn-primary btn-download" download='indicator_11-2-1.csv' tabindex='0' role='button'>Télécharger Source CSV</a>
-
-    <p class="no-js-disaggregation-hint">Télécharger le CSV source pour les désagrégations</p>
-
-    
-    <h3>Aucune donnée principale disponible</h3>
-    
-  </div>
-
-  
-
-</div>
-
-
-<section>
-
-  <p class="async-loading" data-img="/assets/img/loading-small.gif"></p>
-
-  <div class="async-loaded mt-4" style="display:none;">
-
-    <div style="display: none;">
-    <span id="table-alternative">Pour une alternative aux données tabulaires, voir l’onglet Tableau.</span>
-  </div>
-  <ul class="nav nav-tabs non-stacking-tabs data-view" role="tablist">
-    
-    <li role="presentation"
-      class="
-        nav-item
-        
-        
-      ">
-      <button
-        class="nav-link active"
-        data-bs-toggle="tab"
-        role="tab"
-        type="button"
-        
-          id="tab-chartview"
-          data-bs-target="#chartview"
-          aria-controls="chartview"
-          aria-describedby="table-alternative"
-          data-on="click"
-data-event-category="Tab change"
-data-event-action="Change data view"
-data-event-label="Change to Chart tab"
-
-        
-      >Graphique</button>
-    </li>
-    
-    <li role="presentation"
-      class="
-        nav-item
-        
-        
-      ">
-      <button
-        class="nav-link "
-        data-bs-toggle="tab"
-        role="tab"
-        type="button"
-        
-          id="tab-tableview"
-          data-bs-target="#tableview"
-          aria-controls="tableview"
-          data-on="click"
-data-event-category="Tab change"
-data-event-action="Change data view"
-data-event-label="Change to Table tab"
-
-        
-      >Tableau</button>
-    </li>
-    
-    <li role="presentation"
-      class="
-        nav-item
-        map
-        
-      ">
-      <button
-        class="nav-link "
-        data-bs-toggle="tab"
-        role="tab"
-        type="button"
-        
-          id="tab-mapview"
-          data-bs-target="#mapview"
-          aria-controls="mapview"
-          data-no-disagg="true"
-          data-on="click"
-data-event-category="Tab change"
-data-event-action="Change data view"
-data-event-label="Change to Map tab"
-
-        
-      >Carte</button>
-    </li>
-    
-  </ul>
-  
-    <div class="tab-content data-view">
-    
-      
-        <div role="tabpanel" class="tab-pane active" id="chartview">
-          
-
-    <div id="dataset-size-warning" style="display:none" role="alert">
-      <i class="fa fa-bolt"><span class="sr-only">Avertissement :</span></i>
-      Il y a trop de jeux de données à afficher sur le graphique. Tout ne sera pas affiché jusqu&#39;à ce que vous supprimiez certaines sélections.
-    </div>
-
-    
-    <div id="selectionsChart">
-      <figure role="group">
-        <div id="chart-canvas">
-          <h4 id="chart-heading" class="chart-title">
-            Proportion de la population ayant aisément accès aux transports publics
-          </h4>
-          <div id="chart" class="plot-container">
-            <canvas
-    role="img"
-    aria-labelledby="chart-heading"
-    aria-describedby="table-alternative chart-annotations"
-    tabindex="0"
- ></canvas>
-
-          </div>
-          <div id="plotLegend"></div>
-          
-
-
-
-<div id="selectionChartFooter" class="table-footer-text">
-  <h5 class="sr-only">Chart details</h5>
-    <dl>
-        
-        <dt>Source:</dt>
-        <dd>Statistique Canada</dd>
-        
-
-        
-        <dt>Zone géographique:</dt>
-        <dd>Canada</dd>
-        
-
-        <dt class="data-controlled-footer-field unit-from-data">Unité de mesure:</dt>
-        <dd class="data-controlled-footer-field unit-from-data"></dd>
-
-        
-
-        
-
-        
-
-        
-        
-        <dt
-          class="data-controlled-footer-field"
-          data-ts-attribute="COMMENT_TS"
-        >Note:</dt>
-        <dd
-          class="data-controlled-footer-field"
-          data-ts-attribute="COMMENT_TS"
-        ></dd>
-        
-        <dt
-          class="data-controlled-footer-field"
-          data-ts-attribute="DATA_LAST_UPDATE"
-        >Dernière mise à jour des données:</dt>
-        <dd
-          class="data-controlled-footer-field"
-          data-ts-attribute="DATA_LAST_UPDATE"
-        ></dd>
-        
-        
-    </dl>
-    
-    <dl class="observation-attribute-list"></dl>
-    
-</div>
-
-        </div>
-      </figure>
-      <div id="chartSelectionDownload" class="clearfix">
-        <button
-          id="btnSave"
-          title="Télécharger le graphique en image"
-          aria-label="Télécharger le graphique en image"
-          class='btn btn-primary btn-download'>
-          Télécharger l'image graphique
-        </button><!--
-   --></div>
-    </div>
-
-
-
-        </div>
-      
-    
-      
-        <div role="tabpanel" class="tab-pane " id="tableview">
-          <div style="display: none;">
-            <span id="column-sort-info">Cliquez pour trier par cette colonne</span>
-          </div>
-          <div id="selectionsTable"></div>
-<dl id="tableTargetLines" class="clearfix"></dl>
-
-
-
-
-<div id="selectionTableFooter" class="table-footer-text">
-  <h5 class="sr-only">Chart details</h5>
-    <dl>
-        
-        <dt>Source:</dt>
-        <dd>Statistique Canada</dd>
-        
-
-        
-        <dt>Zone géographique:</dt>
-        <dd>Canada</dd>
-        
-
-        <dt class="data-controlled-footer-field unit-from-data">Unité de mesure:</dt>
-        <dd class="data-controlled-footer-field unit-from-data"></dd>
-
-        
-
-        
-
-        
-
-        
-        
-        <dt
-          class="data-controlled-footer-field"
-          data-ts-attribute="COMMENT_TS"
-        >Note:</dt>
-        <dd
-          class="data-controlled-footer-field"
-          data-ts-attribute="COMMENT_TS"
-        ></dd>
-        
-        <dt
-          class="data-controlled-footer-field"
-          data-ts-attribute="DATA_LAST_UPDATE"
-        >Dernière mise à jour des données:</dt>
-        <dd
-          class="data-controlled-footer-field"
-          data-ts-attribute="DATA_LAST_UPDATE"
-        ></dd>
-        
-        
-    </dl>
-    
-    <dl class="observation-attribute-list"></dl>
-    
-</div>
-
-<div id="tableSelectionDownload" class="clearfix"></div>
-
-        </div>
-      
-    
-      
-        <div role="tabpanel" class="tab-pane " id="mapview" class="map">
-          
-<h4 id="map-heading" class="map-title">Proportion de la population ayant aisément accès aux transports publics</h4>
-<div id="map" aria-describedby="table-alternative">
-  <img class="map-loading-image" src="/assets/img/loading.gif" alt="Chargement de la carte" />
-</div>
-
-
-
-
-<div id="mapFooter" class="table-footer-text">
-  <h5 class="sr-only">Chart details</h5>
-    <dl>
-        
-        <dt>Source:</dt>
-        <dd>Statistique Canada</dd>
-        
-
-        
-        <dt>Zone géographique:</dt>
-        <dd>Canada</dd>
-        
-
-        <dt class="data-controlled-footer-field unit-from-data">Unité de mesure:</dt>
-        <dd class="data-controlled-footer-field unit-from-data"></dd>
-
-        
-
-        
-
-        
-
-        
-        
-        <dt
-          class="data-controlled-footer-field"
-          data-ts-attribute="COMMENT_TS"
-        >Note:</dt>
-        <dd
-          class="data-controlled-footer-field"
-          data-ts-attribute="COMMENT_TS"
-        ></dd>
-        
-        <dt
-          class="data-controlled-footer-field"
-          data-ts-attribute="DATA_LAST_UPDATE"
-        >Dernière mise à jour des données:</dt>
-        <dd
-          class="data-controlled-footer-field"
-          data-ts-attribute="DATA_LAST_UPDATE"
-        ></dd>
-        
-        
-    </dl>
-    
-    <dl class="observation-attribute-list"></dl>
-    
-</div>
-
-
-        </div>
-      
-    
-  </div>
-  
-
-  </div>
-
-</section>
-
+  <div id="indicator-main" class="indicator-main col-md-12">
   
   <div class="mt-4">
 <ul class="nav nav-tabs" role="tablist">
@@ -2234,15 +1883,6 @@ data-event-label="Change to Sources tab"
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.2.2/dist/chartjs-plugin-annotation.min.js" integrity="sha256-XuHhf6q+GD7fscc96mTm/228GXf1Nn9wOYOE0EgeFzY=" crossorigin="anonymous"></script>
 
 
-<script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet.zoomshowhide@0.1.0/dist/leaflet-zoom-show-hide.js" integrity="sha384-+Ae+bvCvR9gwQHFyh60GUfdqhUAL+S/O5mLeAkmkv2yBQxeLxm3gvLEzYPoXBwbT" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/1.4.0/chroma.min.js" integrity="sha384-cU7kVmimPTBpe76764qMxEdujXzlgSm15cCQe6FXFud5DiV4vrJQHUK9S0Lo2cqT" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.js" integrity="sha384-vOZkQA9epgnqbXkNdVSlxfyhrOSzYBsL3s3b2CQYn05H6lzrbrb368uBSRSUTAiv" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/gh/socib/Leaflet.TimeDimension@fa36ffee7f6390aadce8c055ca7c60ede7c2134c/dist/leaflet.timedimension.min.js" integrity="sha384-xQ62+wlP0nHf7UhZ81djmqLn+7arwKiMk/dJk+smi+rJhaXPZAeFPX4bEiD9twIy" crossorigin="anonymous"></script>
-<script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js" integrity="sha384-btJhAWztz7ttA6ibFC5ppM39nkCPK6CWzRVmsaLcDn37mA3x1TzF1DbFwa6tJpTN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/gh/torfsen/leaflet.zoomhome@84a0291e80244ed9301cbc09d55850f0af53e602/dist/leaflet.zoomhome.min.js" integrity="sha384-UH2Ux7vOhzo5dH5kWWPmpvCCRCiS0hQ12YQN6qTUJXOpx+HpKePItLNSSm2AxKjF" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet-search@2.9.7/dist/leaflet-search.min.js" integrity="sha384-C/UzSz5aXmLxJwe/b9I0CIv+cfLcGIXmfl40m9+kyJhlgNxvWT6+WRjCbA8Eflf/" crossorigin="anonymous"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha384-eEX5kO4tdQpY+eTjDbZNPlMm4QhsK+kosSZtkzp+uZk0L5g0lSzmWXWHzKDoOzA7" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.3/dist/html2canvas.js" integrity="sha384-3qyhlVVDXXiWhzgKIoL/aw+uaXN5kyAFE0Jv2LGoV+nnQnum4ebt1QAtRbjnz9pL" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js" integrity="sha384-KQ8aykg/lc6595wSrMplFVs4kRS66x+EdkX7EQsJ2Pe6FX7l3tMqyD1Am0c2dKBG" crossorigin="anonymous"></script>
@@ -2259,12 +1899,12 @@ data-event-label="Change to Sources tab"
 <script>translations['search'] = translations['search'] || {};
     translations['search']['search'] = 'Chercher';</script>
 
-<script src='/assets/js/sdg.js?v=20250710174907'></script>
+<script src='/assets/js/sdg.js?v=20250715204212'></script>
 
 
     
     
-    <script src="/assets/js/custom.js?v=20250710174907"></script><script>
+    <script src="/assets/js/custom.js?v=20250715204212"></script><script>
     new indicatorInit();
     new accessibilitySwitcher();
 </script>
