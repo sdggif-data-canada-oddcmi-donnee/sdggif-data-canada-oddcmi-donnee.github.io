@@ -137,7 +137,7 @@ var translations = {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link res="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
-        <link rel="stylesheet" href="/assets/css/style.css?v=20251007205915">
+        <link rel="stylesheet" href="/assets/css/style.css?v=20251016211508">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
@@ -298,7 +298,7 @@ data-event-label="high"
 
 
 <div class="reporting-status-description">
-  <p>The reporting status tab provides an overview of how many Sustainable Development Goal indicators Canada measures and reports on. For more information, see <a href="https://sdggif-data-canada-oddcmi-donnee.github.io/faq//#what-does-the-reporting-status-mean">What does the reporting status mean?</a> <br /> <br /> The disaggregation status tab provides an overview of how many Sustainable Development Goal indicators are disaggregated in accordance with the disaggregation requirements established by the United Nations for each indicator.</p>
+  <p>The reporting status tab provides an overview of how many Sustainable Development Goal indicators Canada measures and reports on. For more information, see <a href="https://sdggif-data-canada-oddcmi-donnee.github.io/faq//#what-does-the-reporting-status-mean">What does the reporting status mean?</a> <br /> <br /> The disaggregation status tab provides an overview of how many Sustainable Development Goal indicators include data disaggregated according to the United Nations (UN) requirements for each indicator, with some exceptions. Proxy indicators that differ significantly from the UN metadata are assessed using national standards and are considered fully disaggregated when these standards are met. Proxy indicators that align closely with the UN metadata continue to be evaluated against the UN’s disaggregation requirements. Indicators with the following statuses are considered out of scope: <i>data not available</i>, <i>data not applicable</i>, and <i>exploring data sources</i></p>
 
 </div>
 
@@ -306,7 +306,33 @@ data-event-label="high"
 
   <div>
   
+  <ul class="nav nav-tabs reporting-status-view" role="tablist">
+    <li role="presentation" class="nav-item active">
+      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#goalsview" aria-controls="goalsview" role="tab" data-on="click"
+data-event-category="Tab change"
+data-event-action="Change reporting status view"
+data-event-label="Change reporting status view to goals"
+>Reporting status</button>
+    </li>
+    
 
+    
+      <li role="presentation" class="nav-item">
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#disaggregationsview" aria-controls="disaggregationsview" role="tab" data-on="click"
+data-event-category="Tab change"
+data-event-action="Change reporting status view"
+data-event-label="Change reporting status view to disaggregations"
+>Disaggregation status</button>
+      </li>
+      
+
+    
+  </ul>
+  
+
+  
+  <div class="tab-content reporting-status-view">
+    <div role="tabpanel" class="tab-pane active" id="goalsview">
   
   <div class="goal goal-overall">
     
@@ -324,13 +350,12 @@ data-event-label="high"
             <div class="statuses">
             
             <div>
-                <span class="status complete"><span class="status-inner">167</span></span><strong>Reported online</strong><span class="value">67%</span>
+                <span class="status notstarted"><span class="status-inner">69</span></span><strong>Exploring data sources</strong><span class="value">28%</span>
             </div>
             
             
-            
             <div>
-                <span class="status notstarted"><span class="status-inner">69</span></span><strong>Exploring data sources</strong><span class="value">28%</span>
+                <span class="status complete"><span class="status-inner">167</span></span><strong>Reported online</strong><span class="value">67%</span>
             </div>
             
             
@@ -350,14 +375,13 @@ data-event-label="high"
             
             
             
-            <span class="complete" style="width:67.33870967741935%" title="Reported online: 67%"></span>
-            
-            
-            
-            
-            
-            
             <span class="notstarted" style="width:27.82258064516129%" title="Exploring data sources: 28%"></span>
+            
+            
+            
+            
+            
+            <span class="complete" style="width:67.33870967741935%" title="Reported online: 67%"></span>
             
             
             
@@ -391,13 +415,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">10</span></span><strong>Reported online</strong><span class="value">77%</span>
+                    <span class="status notstarted"><span class="status-inner">2</span></span><strong>Exploring data sources</strong><span class="value">15%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">2</span></span><strong>Exploring data sources</strong><span class="value">15%</span>
+                    <span class="status complete"><span class="status-inner">10</span></span><strong>Reported online</strong><span class="value">77%</span>
                 </div>
                 
                 
@@ -417,14 +440,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:76.92307692307693%" title="Reported online: 77%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:15.384615384615385%" title="Exploring data sources: 15%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:76.92307692307693%" title="Reported online: 77%"></span>
                 
                 
                 
@@ -458,13 +480,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">10</span></span><strong>Reported online</strong><span class="value">71%</span>
+                    <span class="status notstarted"><span class="status-inner">4</span></span><strong>Exploring data sources</strong><span class="value">29%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">4</span></span><strong>Exploring data sources</strong><span class="value">29%</span>
+                    <span class="status complete"><span class="status-inner">10</span></span><strong>Reported online</strong><span class="value">71%</span>
                 </div>
                 
                 
@@ -484,14 +505,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:71.42857142857143%" title="Reported online: 71%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:28.57142857142857%" title="Exploring data sources: 29%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:71.42857142857143%" title="Reported online: 71%"></span>
                 
                 
                 
@@ -525,13 +545,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">23</span></span><strong>Reported online</strong><span class="value">82%</span>
+                    <span class="status notstarted"><span class="status-inner">4</span></span><strong>Exploring data sources</strong><span class="value">14%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">4</span></span><strong>Exploring data sources</strong><span class="value">14%</span>
+                    <span class="status complete"><span class="status-inner">23</span></span><strong>Reported online</strong><span class="value">82%</span>
                 </div>
                 
                 
@@ -551,14 +570,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:82.14285714285714%" title="Reported online: 82%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:14.285714285714285%" title="Exploring data sources: 14%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:82.14285714285714%" title="Reported online: 82%"></span>
                 
                 
                 
@@ -592,13 +610,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">11</span></span><strong>Reported online</strong><span class="value">92%</span>
+                    <span class="status notstarted"><span class="status-inner">1</span></span><strong>Exploring data sources</strong><span class="value">8%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">1</span></span><strong>Exploring data sources</strong><span class="value">8%</span>
+                    <span class="status complete"><span class="status-inner">11</span></span><strong>Reported online</strong><span class="value">92%</span>
                 </div>
                 
                 
@@ -618,14 +635,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:91.66666666666666%" title="Reported online: 92%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:8.333333333333332%" title="Exploring data sources: 8%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:91.66666666666666%" title="Reported online: 92%"></span>
                 
                 
                 
@@ -659,13 +675,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">9</span></span><strong>Reported online</strong><span class="value">64%</span>
+                    <span class="status notstarted"><span class="status-inner">4</span></span><strong>Exploring data sources</strong><span class="value">29%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">4</span></span><strong>Exploring data sources</strong><span class="value">29%</span>
+                    <span class="status complete"><span class="status-inner">9</span></span><strong>Reported online</strong><span class="value">64%</span>
                 </div>
                 
                 
@@ -685,14 +700,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:64.28571428571429%" title="Reported online: 64%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:28.57142857142857%" title="Exploring data sources: 29%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:64.28571428571429%" title="Reported online: 64%"></span>
                 
                 
                 
@@ -726,13 +740,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">8</span></span><strong>Reported online</strong><span class="value">73%</span>
+                    <span class="status notstarted"><span class="status-inner">2</span></span><strong>Exploring data sources</strong><span class="value">18%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">2</span></span><strong>Exploring data sources</strong><span class="value">18%</span>
+                    <span class="status complete"><span class="status-inner">8</span></span><strong>Reported online</strong><span class="value">73%</span>
                 </div>
                 
                 
@@ -752,14 +765,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:72.72727272727273%" title="Reported online: 73%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:18.181818181818183%" title="Exploring data sources: 18%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:72.72727272727273%" title="Reported online: 73%"></span>
                 
                 
                 
@@ -793,13 +805,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">5</span></span><strong>Reported online</strong><span class="value">83%</span>
+                    <span class="status notstarted"><span class="status-inner">0</span></span><strong>Exploring data sources</strong><span class="value">0%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">0</span></span><strong>Exploring data sources</strong><span class="value">0%</span>
+                    <span class="status complete"><span class="status-inner">5</span></span><strong>Reported online</strong><span class="value">83%</span>
                 </div>
                 
                 
@@ -819,14 +830,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:83.33333333333334%" title="Reported online: 83%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:0.0%" title="Exploring data sources: 0%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:83.33333333333334%" title="Reported online: 83%"></span>
                 
                 
                 
@@ -860,13 +870,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">10</span></span><strong>Reported online</strong><span class="value">63%</span>
+                    <span class="status notstarted"><span class="status-inner">5</span></span><strong>Exploring data sources</strong><span class="value">31%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">5</span></span><strong>Exploring data sources</strong><span class="value">31%</span>
+                    <span class="status complete"><span class="status-inner">10</span></span><strong>Reported online</strong><span class="value">63%</span>
                 </div>
                 
                 
@@ -886,14 +895,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:62.5%" title="Reported online: 63%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:31.25%" title="Exploring data sources: 31%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:62.5%" title="Reported online: 63%"></span>
                 
                 
                 
@@ -927,13 +935,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">12</span></span><strong>Reported online</strong><span class="value">100%</span>
+                    <span class="status notstarted"><span class="status-inner">0</span></span><strong>Exploring data sources</strong><span class="value">0%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">0</span></span><strong>Exploring data sources</strong><span class="value">0%</span>
+                    <span class="status complete"><span class="status-inner">12</span></span><strong>Reported online</strong><span class="value">100%</span>
                 </div>
                 
                 
@@ -953,14 +960,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:100.0%" title="Reported online: 100%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:0.0%" title="Exploring data sources: 0%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:100.0%" title="Reported online: 100%"></span>
                 
                 
                 
@@ -994,13 +1000,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">8</span></span><strong>Reported online</strong><span class="value">57%</span>
+                    <span class="status notstarted"><span class="status-inner">5</span></span><strong>Exploring data sources</strong><span class="value">36%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">5</span></span><strong>Exploring data sources</strong><span class="value">36%</span>
+                    <span class="status complete"><span class="status-inner">8</span></span><strong>Reported online</strong><span class="value">57%</span>
                 </div>
                 
                 
@@ -1020,14 +1025,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:57.14285714285714%" title="Reported online: 57%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:35.714285714285715%" title="Exploring data sources: 36%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:57.14285714285714%" title="Reported online: 57%"></span>
                 
                 
                 
@@ -1061,13 +1065,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">10</span></span><strong>Reported online</strong><span class="value">67%</span>
+                    <span class="status notstarted"><span class="status-inner">4</span></span><strong>Exploring data sources</strong><span class="value">27%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">4</span></span><strong>Exploring data sources</strong><span class="value">27%</span>
+                    <span class="status complete"><span class="status-inner">10</span></span><strong>Reported online</strong><span class="value">67%</span>
                 </div>
                 
                 
@@ -1087,14 +1090,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:66.66666666666666%" title="Reported online: 67%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:26.666666666666664%" title="Exploring data sources: 27%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:66.66666666666666%" title="Reported online: 67%"></span>
                 
                 
                 
@@ -1128,13 +1130,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">5</span></span><strong>Reported online</strong><span class="value">38%</span>
+                    <span class="status notstarted"><span class="status-inner">7</span></span><strong>Exploring data sources</strong><span class="value">54%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">7</span></span><strong>Exploring data sources</strong><span class="value">54%</span>
+                    <span class="status complete"><span class="status-inner">5</span></span><strong>Reported online</strong><span class="value">38%</span>
                 </div>
                 
                 
@@ -1154,14 +1155,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:38.46153846153847%" title="Reported online: 38%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:53.84615384615384%" title="Exploring data sources: 54%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:38.46153846153847%" title="Reported online: 38%"></span>
                 
                 
                 
@@ -1195,13 +1195,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">6</span></span><strong>Reported online</strong><span class="value">75%</span>
+                    <span class="status notstarted"><span class="status-inner">1</span></span><strong>Exploring data sources</strong><span class="value">13%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">1</span></span><strong>Exploring data sources</strong><span class="value">13%</span>
+                    <span class="status complete"><span class="status-inner">6</span></span><strong>Reported online</strong><span class="value">75%</span>
                 </div>
                 
                 
@@ -1221,14 +1220,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:75.0%" title="Reported online: 75%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:12.5%" title="Exploring data sources: 13%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:75.0%" title="Reported online: 75%"></span>
                 
                 
                 
@@ -1262,13 +1260,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">2</span></span><strong>Reported online</strong><span class="value">20%</span>
+                    <span class="status notstarted"><span class="status-inner">8</span></span><strong>Exploring data sources</strong><span class="value">80%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">8</span></span><strong>Exploring data sources</strong><span class="value">80%</span>
+                    <span class="status complete"><span class="status-inner">2</span></span><strong>Reported online</strong><span class="value">20%</span>
                 </div>
                 
                 
@@ -1288,14 +1285,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:20.0%" title="Reported online: 20%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:80.0%" title="Exploring data sources: 80%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:20.0%" title="Reported online: 20%"></span>
                 
                 
                 
@@ -1329,13 +1325,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">10</span></span><strong>Reported online</strong><span class="value">71%</span>
+                    <span class="status notstarted"><span class="status-inner">4</span></span><strong>Exploring data sources</strong><span class="value">29%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">4</span></span><strong>Exploring data sources</strong><span class="value">29%</span>
+                    <span class="status complete"><span class="status-inner">10</span></span><strong>Reported online</strong><span class="value">71%</span>
                 </div>
                 
                 
@@ -1355,14 +1350,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:71.42857142857143%" title="Reported online: 71%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:28.57142857142857%" title="Exploring data sources: 29%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:71.42857142857143%" title="Reported online: 71%"></span>
                 
                 
                 
@@ -1396,13 +1390,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">15</span></span><strong>Reported online</strong><span class="value">63%</span>
+                    <span class="status notstarted"><span class="status-inner">8</span></span><strong>Exploring data sources</strong><span class="value">33%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">8</span></span><strong>Exploring data sources</strong><span class="value">33%</span>
+                    <span class="status complete"><span class="status-inner">15</span></span><strong>Reported online</strong><span class="value">63%</span>
                 </div>
                 
                 
@@ -1422,14 +1415,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:62.5%" title="Reported online: 63%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:33.33333333333333%" title="Exploring data sources: 33%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:62.5%" title="Reported online: 63%"></span>
                 
                 
                 
@@ -1463,13 +1455,12 @@ data-event-label="high"
             <div class="statuses">
                 
                 <div>
-                    <span class="status complete"><span class="status-inner">13</span></span><strong>Reported online</strong><span class="value">54%</span>
+                    <span class="status notstarted"><span class="status-inner">10</span></span><strong>Exploring data sources</strong><span class="value">42%</span>
                 </div>
                 
                 
-                
                 <div>
-                    <span class="status notstarted"><span class="status-inner">10</span></span><strong>Exploring data sources</strong><span class="value">42%</span>
+                    <span class="status complete"><span class="status-inner">13</span></span><strong>Reported online</strong><span class="value">54%</span>
                 </div>
                 
                 
@@ -1489,14 +1480,13 @@ data-event-label="high"
                 
                 
                 
-                <span class="complete" style="width:54.16666666666666%" title="Reported online: 54%"></span>
-                
-                
-                
-                
-                
-                
                 <span class="notstarted" style="width:41.66666666666667%" title="Exploring data sources: 42%"></span>
+                
+                
+                
+                
+                
+                <span class="complete" style="width:54.16666666666666%" title="Reported online: 54%"></span>
                 
                 
                 
@@ -1516,11 +1506,1029 @@ data-event-label="high"
     <br style="clear:both;">
 </div>
   
-
+    </div>
   
 
   
 
+  
+    <div role="tabpanel" class="tab-pane" id="disaggregationsview">
+      <div class="goal goal-overall">
+    
+    <div class="frame goal-tiles">
+        <img src="/assets/img/SDG Wheel_Transparent-01.png" alt="Sustainable Development Goals" width="100" height="100" class="goal-icon-image goal-icon-image-"/>
+    </div>
+    
+    <div class="details">
+        <h2 class="status-goal">
+            Overall disaggregation status
+        </h2>
+        <span class="total"><span>124</span> indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+            
+            <div>
+                <span class="status complete"><span class="status-inner">53</span></span><strong>Fully disaggregated</strong><span class="value">43%</span>
+            </div>
+            
+            
+            <div>
+                <span class="status inprogress"><span class="status-inner">44</span></span><strong>Partially disaggregated</strong><span class="value">35%</span>
+            </div>
+            
+            
+            <div>
+                <span class="status notstarted"><span class="status-inner">27</span></span><strong>Not disaggregated</strong><span class="value">22%</span>
+            </div>
+            
+            <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+            
+            
+            
+            
+            <span class="complete" style="width:42.74193548387097%" title="Fully disaggregated: 43%"></span>
+            
+            
+            
+            
+            
+            <span class="inprogress" style="width:35.48387096774194%" title="Partially disaggregated: 35%"></span>
+            
+            
+            
+            
+            
+            <span class="notstarted" style="width:21.774193548387096%" title="Not disaggregated: 22%"></span>
+            
+            </div>
+        
+    </div>
+    <br style="clear:both;">
+</div>
+      <h2>Status by goal</h2><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/1/" title="View targets and indicators for Goal 1" aria-label="View targets and indicators for Goal 1">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/1.png" alt="No poverty - Goal 1" width="100" height="100" class="goal-icon-1 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/1/">No poverty</a>
+        </h3>
+        <span class="total">8 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">3</span></span><strong>Fully disaggregated</strong><span class="value">38%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">3</span></span><strong>Partially disaggregated</strong><span class="value">38%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">2</span></span><strong>Not disaggregated</strong><span class="value">25%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:37.5%" title="Fully disaggregated: 38%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:37.5%" title="Partially disaggregated: 38%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:25.0%" title="Not disaggregated: 25%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/2/" title="View targets and indicators for Goal 2" aria-label="View targets and indicators for Goal 2">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/2.png" alt="Zero hunger - Goal 2" width="100" height="100" class="goal-icon-2 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/2/">Zero hunger</a>
+        </h3>
+        <span class="total">7 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">2</span></span><strong>Fully disaggregated</strong><span class="value">29%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">2</span></span><strong>Partially disaggregated</strong><span class="value">29%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">3</span></span><strong>Not disaggregated</strong><span class="value">43%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:28.57142857142857%" title="Fully disaggregated: 29%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:28.57142857142857%" title="Partially disaggregated: 29%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:42.857142857142854%" title="Not disaggregated: 43%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/3/" title="View targets and indicators for Goal 3" aria-label="View targets and indicators for Goal 3">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/3.png" alt="Good health and well-being - Goal 3" width="100" height="100" class="goal-icon-3 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/3/">Good health and well-being</a>
+        </h3>
+        <span class="total">19 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">7</span></span><strong>Fully disaggregated</strong><span class="value">37%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">9</span></span><strong>Partially disaggregated</strong><span class="value">47%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">3</span></span><strong>Not disaggregated</strong><span class="value">16%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:36.84210526315789%" title="Fully disaggregated: 37%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:47.368421052631575%" title="Partially disaggregated: 47%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:15.789473684210526%" title="Not disaggregated: 16%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/4/" title="View targets and indicators for Goal 4" aria-label="View targets and indicators for Goal 4">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/4.png" alt="Quality education - Goal 4" width="100" height="100" class="goal-icon-4 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/4/">Quality education</a>
+        </h3>
+        <span class="total">8 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">2</span></span><strong>Fully disaggregated</strong><span class="value">25%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">5</span></span><strong>Partially disaggregated</strong><span class="value">63%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">1</span></span><strong>Not disaggregated</strong><span class="value">13%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:25.0%" title="Fully disaggregated: 25%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:62.5%" title="Partially disaggregated: 63%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:12.5%" title="Not disaggregated: 13%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/5/" title="View targets and indicators for Goal 5" aria-label="View targets and indicators for Goal 5">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/5.png" alt="Gender equality - Goal 5" width="100" height="100" class="goal-icon-5 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/5/">Gender equality</a>
+        </h3>
+        <span class="total">6 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">4</span></span><strong>Fully disaggregated</strong><span class="value">67%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">1</span></span><strong>Partially disaggregated</strong><span class="value">17%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">1</span></span><strong>Not disaggregated</strong><span class="value">17%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:66.66666666666666%" title="Fully disaggregated: 67%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:16.666666666666664%" title="Partially disaggregated: 17%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:16.666666666666664%" title="Not disaggregated: 17%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/6/" title="View targets and indicators for Goal 6" aria-label="View targets and indicators for Goal 6">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/6.png" alt="Clean water and sanitation - Goal 6" width="100" height="100" class="goal-icon-6 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/6/">Clean water and sanitation</a>
+        </h3>
+        <span class="total">8 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">4</span></span><strong>Fully disaggregated</strong><span class="value">50%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">2</span></span><strong>Partially disaggregated</strong><span class="value">25%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">2</span></span><strong>Not disaggregated</strong><span class="value">25%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:50.0%" title="Fully disaggregated: 50%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:25.0%" title="Partially disaggregated: 25%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:25.0%" title="Not disaggregated: 25%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/7/" title="View targets and indicators for Goal 7" aria-label="View targets and indicators for Goal 7">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/7.png" alt="Affordable and clean energy - Goal 7" width="100" height="100" class="goal-icon-7 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/7/">Affordable and clean energy</a>
+        </h3>
+        <span class="total">4 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">3</span></span><strong>Fully disaggregated</strong><span class="value">75%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">0</span></span><strong>Partially disaggregated</strong><span class="value">0%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">1</span></span><strong>Not disaggregated</strong><span class="value">25%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:75.0%" title="Fully disaggregated: 75%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:0.0%" title="Partially disaggregated: 0%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:25.0%" title="Not disaggregated: 25%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/8/" title="View targets and indicators for Goal 8" aria-label="View targets and indicators for Goal 8">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/8.png" alt="Decent work and economic growth - Goal 8" width="100" height="100" class="goal-icon-8 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/8/">Decent work and economic growth</a>
+        </h3>
+        <span class="total">7 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">3</span></span><strong>Fully disaggregated</strong><span class="value">43%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">4</span></span><strong>Partially disaggregated</strong><span class="value">57%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">0</span></span><strong>Not disaggregated</strong><span class="value">0%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:42.857142857142854%" title="Fully disaggregated: 43%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:57.14285714285714%" title="Partially disaggregated: 57%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:0.0%" title="Not disaggregated: 0%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/9/" title="View targets and indicators for Goal 9" aria-label="View targets and indicators for Goal 9">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/9.png" alt="Industry, innovation and infrastructure - Goal 9" width="100" height="100" class="goal-icon-9 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/9/">Industry, innovation and infrastructure</a>
+        </h3>
+        <span class="total">8 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">5</span></span><strong>Fully disaggregated</strong><span class="value">63%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">2</span></span><strong>Partially disaggregated</strong><span class="value">25%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">1</span></span><strong>Not disaggregated</strong><span class="value">13%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:62.5%" title="Fully disaggregated: 63%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:25.0%" title="Partially disaggregated: 25%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:12.5%" title="Not disaggregated: 13%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/10/" title="View targets and indicators for Goal 10" aria-label="View targets and indicators for Goal 10">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/10.png" alt="Reduced inequalities - Goal 10" width="100" height="100" class="goal-icon-10 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/10/">Reduced inequalities</a>
+        </h3>
+        <span class="total">6 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">3</span></span><strong>Fully disaggregated</strong><span class="value">50%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">3</span></span><strong>Partially disaggregated</strong><span class="value">50%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">0</span></span><strong>Not disaggregated</strong><span class="value">0%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:50.0%" title="Fully disaggregated: 50%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:50.0%" title="Partially disaggregated: 50%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:0.0%" title="Not disaggregated: 0%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/11/" title="View targets and indicators for Goal 11" aria-label="View targets and indicators for Goal 11">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/11.png" alt="Sustainable cities and communities - Goal 11" width="100" height="100" class="goal-icon-11 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/11/">Sustainable cities and communities</a>
+        </h3>
+        <span class="total">8 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">4</span></span><strong>Fully disaggregated</strong><span class="value">50%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">4</span></span><strong>Partially disaggregated</strong><span class="value">50%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">0</span></span><strong>Not disaggregated</strong><span class="value">0%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:50.0%" title="Fully disaggregated: 50%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:50.0%" title="Partially disaggregated: 50%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:0.0%" title="Not disaggregated: 0%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/12/" title="View targets and indicators for Goal 12" aria-label="View targets and indicators for Goal 12">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/12.png" alt="Responsible consumption and production - Goal 12" width="100" height="100" class="goal-icon-12 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/12/">Responsible consumption and production</a>
+        </h3>
+        <span class="total">4 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">3</span></span><strong>Fully disaggregated</strong><span class="value">75%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">0</span></span><strong>Partially disaggregated</strong><span class="value">0%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">1</span></span><strong>Not disaggregated</strong><span class="value">25%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:75.0%" title="Fully disaggregated: 75%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:0.0%" title="Partially disaggregated: 0%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:25.0%" title="Not disaggregated: 25%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/13/" title="View targets and indicators for Goal 13" aria-label="View targets and indicators for Goal 13">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/13.png" alt="Climate action - Goal 13" width="100" height="100" class="goal-icon-13 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/13/">Climate action</a>
+        </h3>
+        <span class="total">3 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">1</span></span><strong>Fully disaggregated</strong><span class="value">33%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">2</span></span><strong>Partially disaggregated</strong><span class="value">67%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">0</span></span><strong>Not disaggregated</strong><span class="value">0%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:33.33333333333333%" title="Fully disaggregated: 33%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:66.66666666666666%" title="Partially disaggregated: 67%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:0.0%" title="Not disaggregated: 0%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/14/" title="View targets and indicators for Goal 14" aria-label="View targets and indicators for Goal 14">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/14.png" alt="Life below water - Goal 14" width="100" height="100" class="goal-icon-14 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/14/">Life below water</a>
+        </h3>
+        <span class="total">2 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">0</span></span><strong>Fully disaggregated</strong><span class="value">0%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">0</span></span><strong>Partially disaggregated</strong><span class="value">0%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">2</span></span><strong>Not disaggregated</strong><span class="value">100%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:0.0%" title="Fully disaggregated: 0%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:0.0%" title="Partially disaggregated: 0%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:100.0%" title="Not disaggregated: 100%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/15/" title="View targets and indicators for Goal 15" aria-label="View targets and indicators for Goal 15">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/15.png" alt="Life on land - Goal 15" width="100" height="100" class="goal-icon-15 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/15/">Life on land</a>
+        </h3>
+        <span class="total">6 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">1</span></span><strong>Fully disaggregated</strong><span class="value">17%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">1</span></span><strong>Partially disaggregated</strong><span class="value">17%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">4</span></span><strong>Not disaggregated</strong><span class="value">67%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:16.666666666666664%" title="Fully disaggregated: 17%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:16.666666666666664%" title="Partially disaggregated: 17%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:66.66666666666666%" title="Not disaggregated: 67%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/16/" title="View targets and indicators for Goal 16" aria-label="View targets and indicators for Goal 16">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/16.png" alt="Peace, justice and strong institutions - Goal 16" width="100" height="100" class="goal-icon-16 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/16/">Peace, justice and strong institutions</a>
+        </h3>
+        <span class="total">13 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">7</span></span><strong>Fully disaggregated</strong><span class="value">54%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">3</span></span><strong>Partially disaggregated</strong><span class="value">23%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">3</span></span><strong>Not disaggregated</strong><span class="value">23%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:53.84615384615384%" title="Fully disaggregated: 54%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:23.076923076923077%" title="Partially disaggregated: 23%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:23.076923076923077%" title="Not disaggregated: 23%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div><div class="goal reporting-status-item">
+    <div class="frame goal-tiles">
+        <a href="/17/" title="View targets and indicators for Goal 17" aria-label="View targets and indicators for Goal 17">
+        <img src="https://open-sdg.org/sdg-translations/assets/img/goals/en/17.png" alt="Partnerships for the goals - Goal 17" width="100" height="100" class="goal-icon-17 goal-icon-image goal-icon-image-"/>
+        </a>
+    </div>
+    <div class="details">
+        <h3 class="status-goal">
+            <a href="/17/">Partnerships for the goals</a>
+        </h3>
+        <span class="total">7 indicators in scope</span>
+        
+        <div class="summary">
+            <div class="statuses">
+                
+                <div>
+                    <span class="status complete"><span class="status-inner">1</span></span><strong>Fully disaggregated</strong><span class="value">14%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status inprogress"><span class="status-inner">3</span></span><strong>Partially disaggregated</strong><span class="value">43%</span>
+                </div>
+                
+                
+                <div>
+                    <span class="status notstarted"><span class="status-inner">3</span></span><strong>Not disaggregated</strong><span class="value">43%</span>
+                </div>
+                
+                <br style="clear:both;">
+            </div>
+        </div>
+        <div class="goal-stats">
+                
+                
+                
+                
+                <span class="complete" style="width:14.285714285714285%" title="Fully disaggregated: 14%"></span>
+                
+                
+                
+                
+                
+                <span class="inprogress" style="width:42.857142857142854%" title="Partially disaggregated: 43%"></span>
+                
+                
+                
+                
+                
+                <span class="notstarted" style="width:42.857142857142854%" title="Not disaggregated: 43%"></span>
+                
+                </div>
+        
+        <div class="divider"></div>
+    </div>
+    <br style="clear:both;">
+</div>
+    </div>
+
+    
+  
+
+  
+  </div>
   
 
   </div>
@@ -1615,12 +2623,12 @@ data-event-label="high"
 <script>translations['search'] = translations['search'] || {};
     translations['search']['search'] = 'Search';</script>
 
-<script src='/assets/js/sdg.js?v=20251007205915'></script>
+<script src='/assets/js/sdg.js?v=20251016211508'></script>
 
 
     
     
-    <script src="/assets/js/custom.js?v=20251007205915"></script><script>
+    <script src="/assets/js/custom.js?v=20251016211508"></script><script>
     new indicatorInit();
     new accessibilitySwitcher();
 </script>
