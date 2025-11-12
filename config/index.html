@@ -43,6 +43,8 @@ var opensdg = {
 
   language: 'en',
 
+  language_numbers: 'en',
+
   mapColors: {
     "default": [
         "#c4e1c6",
@@ -139,7 +141,7 @@ var translations = {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link res="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
-        <link rel="stylesheet" href="/assets/css/style.css?v=20251104190131">
+        <link rel="stylesheet" href="/assets/css/style.css?v=20251112152602">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
@@ -352,6 +354,11 @@ data-event-label="high"
                     }
                 }
             }
+        },
+        "config_form_library_src": {
+            "type": "string",
+            "title": "Configuration form library",
+            "description": "This optional setting controls the URL of the JavaScript library to use for configuration forms, such as the site config form and the indicator config form. Leave blank to default to the latest available code, but using a specific version is recommended. See here for the available versions: https://github.com/open-sdg/open-sdg-config-form#open-sdg-config-form"
         },
         "cookie_consent_form": {
             "type": "object",
@@ -940,6 +947,29 @@ data-event-label="high"
                 "type": "string",
                 "minLength": 1,
                 "title": "Language"
+            }
+        },
+        "languages_numbers": {
+            "type": "array",
+            "title": "Language code overrides to use when formatting numbers",
+            "description": "This setting can be used in the rare cases where browsers are not correctly formatting numbers for a particular language.",
+            "items": {
+                "type": "object",
+                "title": "Language override for numbers",
+                "properties": {
+                    "language": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Language",
+                        "description": "The language code that you would like to override when formatting numbers."
+                    },
+                    "language_numbers": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Language override for numbers",
+                        "description": "The language code that you would like use instead when formatting numbers."
+                    }
+                }
             }
         },
         "languages_public": {
@@ -1772,6 +1802,32 @@ data-event-label="high"
                 },
                 {
                     "type": "GroupWithAccordion",
+                    "label": "Languages numbers",
+                    "documentationKey": "languages_numbers",
+                    "elements": [
+                        {
+                            "type": "ListWithDetail",
+                            "scope": "#/properties/languages_numbers",
+                            "options": {
+                                "detail": {
+                                    "type": "VerticalLayout",
+                                    "elements": [
+                                        {
+                                            "type": "Control",
+                                            "scope": "#/properties/language"
+                                        },
+                                        {
+                                            "type": "Control",
+                                            "scope": "#/properties/language_numbers"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "GroupWithAccordion",
                     "label": "Languages public",
                     "documentationKey": "languages_public",
                     "elements": [
@@ -2476,6 +2532,17 @@ data-event-label="high"
                             "scope": "#/properties/site_config_form/properties/github_owner"
                         }
                     ]
+                },
+                {
+                    "type": "GroupWithAccordion",
+                    "label": "Configuration form library",
+                    "documentationKey": "config_form_library_src",
+                    "elements": [
+                        {
+                            "type": "Control",
+                            "scope": "#/properties/config_form_library_src"
+                        }
+                    ]
                 }
             ]
         },
@@ -2860,6 +2927,9 @@ data-event-label="high"
       opensdg.configForm.githubOwner = null;
     
   </script>
+  
+  
+  
   <script src="https://open-sdg.org/open-sdg-config-form/bundle.js"></script>
 </div>
 <footer role="contentinfo">
@@ -2951,12 +3021,12 @@ data-event-label="high"
 <script>translations['search'] = translations['search'] || {};
     translations['search']['search'] = 'Search';</script>
 
-<script src='/assets/js/sdg.js?v=20251104190131'></script>
+<script src='/assets/js/sdg.js?v=20251112152602'></script>
 
 
     
     
-    <script src="/assets/js/custom.js?v=20251104190131"></script><script>
+    <script src="/assets/js/custom.js?v=20251112152602"></script><script>
     new indicatorInit();
     new accessibilitySwitcher();
 </script>
