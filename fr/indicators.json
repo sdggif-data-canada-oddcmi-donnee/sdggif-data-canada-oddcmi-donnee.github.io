@@ -158,6 +158,14 @@
           "status": "complete"
         },
         {
+          "id": "2-2-4",
+          "title": "Prévalence de la diversité alimentaire minimale, par groupe de population (enfants âgés de 6 à 23,9 mois et femmes non enceintes âgées de 15 à 49 ans)",
+          "description": "",
+          "keywords": "",
+          "href": "/fr/2-2-4/",
+          "status": "notstarted"
+        },
+        {
           "id": "2-3-1",
           "title": "Volume de production par unité de travail, en fonction de la taille de l’exploitation agricole, pastorale ou forestière",
           "description": "",
@@ -942,6 +950,14 @@
           "status": "notstarted"
         },
         {
+          "id": "8-9-2",
+          "title": "Personnes employées dans les industries du tourisme",
+          "description": "",
+          "keywords": "",
+          "href": "/fr/8-9-2/",
+          "status": "notstarted"
+        },
+        {
           "id": "8-10-1",
           "title": "a) Nombre de succursales de banques commerciales pour 100 000 adultes et b) nombre de distributeurs automatiques de billets pour 100 000 adultes",
           "description": "",
@@ -1324,6 +1340,14 @@
           "keywords": "",
           "href": "/fr/11-b-2/",
           "status": "complete"
+        },
+        {
+          "id": "11-c-1",
+          "title": "Total de l’aide publique au développement et des autres apports du secteur public à l’appui de projets d’infrastructure urbaine ou d’infrastructures urbaines, par secteur",
+          "description": "",
+          "keywords": "",
+          "href": "/fr/11-c-1/",
+          "status": "notstarted"
         }]
     }
   },
