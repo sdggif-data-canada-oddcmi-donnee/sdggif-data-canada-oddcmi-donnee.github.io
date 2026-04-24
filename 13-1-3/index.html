@@ -144,7 +144,7 @@ var translations = {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link res="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
-        <link rel="stylesheet" href="/assets/css/style.css?v=20260424141505">
+        <link rel="stylesheet" href="/assets/css/style.css?v=20260424161435">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
@@ -209,7 +209,13 @@ layout-indicator
     <a class="nav-link" href="/about">About</a>
 </li><li class="nav-item ">
     <a class="nav-link" href="/faq">FAQ</a>
-</li><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="dropdown-menu-more-info" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+</li><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="dropdown-menu-summary" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Annual Summary of Progress
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdown-menu-summary"><li class=" ">
+    <a class="dropdown-item" href="/summary_2025">2025 summary</a>
+</li></ul>
+            </li><li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="dropdown-menu-more-info" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     More Information
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdown-menu-more-info"><li class=" ">
@@ -462,7 +468,7 @@ data-event-label="high"
   
 <div class="row indicator-progress">
     <div class="col-sm-2 progress-status-heading">
-        Current progress status
+        <strong>Current progress status</strong>
     </div>
     <div class="col-sm-10">
         
@@ -491,41 +497,42 @@ data-event-label="high"
 
 <div class="row" id="page-content">
   <div class="col-xs-12">
-    <p><strong>Non-statistical indicator</strong>
-<br /><br />
+    
+      <strong>Non-statistical indicator</strong>
+<br><br>
 We have identified the following documents as most relevant for reporting on this indicator:
-<br /><br />
+<br><br>
 The Emergency Management Strategy for Canada guides Federal, Provincial, and Territorial government collaboration on emergency management through an all-hazards, whole-of-society approach. The Strategy outlines key areas where Federal-Provincial-Territorial governments, with respect to their own roles and responsibilities in regards to emergency management, can collaborate to increase disaster resilience by 2030.
 To support the Emergency Management Strategy, Federal-Provincial-Territorial governments are advancing pan-Canadian efforts, according to their respective priorities, through jointly developed action plans.
-<br /><br />
+<br><br>
 <strong>Canada:</strong> <a href="https://www.publicsafety.gc.ca/cnt/rsrcs/pblctns/2024-ems-ctn-rs/index-en.aspx">Advancing the Federal-Provincial-Territorial Emergency Management Strategy: Areas for Action</a>
-<br /><br />
+<br><br>
 <strong>British Columbia:</strong> <a href="https://www2.gov.bc.ca/gov/content/safety/emergency-management/emergency-management/legislation-and-regulations">Emergency Management Legislation</a>
-<br /><br />
+<br><br>
 <strong>Alberta:</strong> <a href="https://open.alberta.ca/publications/alberta-emergency-plan">Alberta emergency plan 2022</a>
-<br /><br />
+<br><br>
 <strong>Saskatchewan:</strong> <a href="https://www.saskpublicsafety.ca/communities/emergency-declaration-and-management-planning">Emergency Declaration and Management Planning</a>
-<br /><br />
+<br><br>
 <strong>Manitoba:</strong> <a href="https://www.gov.mb.ca/emo/about/index.html">Emergency Management Organization</a>
-<br /><br />
+<br><br>
 <strong>Ontario:</strong> <a href="https://www.ontario.ca/page/a-safe-practiced-and-prepared-ontario">A safe, practiced and prepared Ontario</a>
-<br /><br />
+<br><br>
 <strong>Quebec:</strong> <a href="https://www.quebec.ca/gouvernement/ministere/securite-publique/publications/politique-quebecoise-securite-civile-2014-2024">Politique québécoise de sécurité civile 2014-2024 (French only)</a>
-<br /><br />
+<br><br>
 <strong>New Brunswick:</strong> <a href="https://www2.gnb.ca/content/gnb/en/departments/emo/ndmp.html">Emergency Measures Organization</a>
-<br /><br />
+<br><br>
 <strong>Nova Scotia:</strong> <a href="https://beta.novascotia.ca/government/emergency-management">Department of Emergency Management</a>
-<br /><br />
+<br><br>
 <strong>Prince Edward Island:</strong> <a href="https://www.princeedwardisland.ca/en/information/justice-and-public-safety/emergency-measures-organization">Emergency Measures Organization</a>
-<br /><br />
+<br><br>
 <strong>Newfoundland and Labrador:</strong> <a href="https://www.gov.nl.ca/jps/files/publications-pemp-plan.pdf">Provincial Emergency Management Plan</a>
-<br /><br />
+<br><br>
 <strong>Yukon:</strong> <a href="https://yukon.ca/sites/default/files/2025-01/Health%20and%20Social%20Services%20Emergency%20Management%20Plan%20-%20FINAL.pdf">Emergency Management Plan</a>
-<br /><br />
+<br><br>
 <strong>Northwest Territories:</strong> <a href="https://www.maca.gov.nt.ca/en/services/emergency-management-nwt">Emergency Management in the NWT</a>
-<br /><br />
-<strong>Nunavut:</strong> <a href="https://www.gov.nu.ca/en/public-safety-and-emergencies/nunavut-emergency-management">Nunavut Emergency Management</a></p>
-
+<br><br>
+<strong>Nunavut:</strong> <a href="https://www.gov.nu.ca/en/public-safety-and-emergencies/nunavut-emergency-management">Nunavut Emergency Management</a>
+    
   </div>
 </div>
 
@@ -2167,12 +2174,12 @@ data-event-label="Change to Sources tab"
 <script>translations['search'] = translations['search'] || {};
     translations['search']['search'] = 'Search';</script>
 
-<script src='/assets/js/sdg.js?v=20260424141505'></script>
+<script src='/assets/js/sdg.js?v=20260424161435'></script>
 
 
     
     
-    <script src="/assets/js/custom.js?v=20260424141505"></script><script>
+    <script src="/assets/js/custom.js?v=20260424161435"></script><script>
     new indicatorInit();
     new accessibilitySwitcher();
 </script>

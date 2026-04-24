@@ -1503,6 +1503,54 @@ body.contrast-high .proxy-pill {
     .status.notapplicable .status-inner {
       background-color: rgba(255, 255, 255, 0.8);
       background: rgba(255, 255, 255, 0.8); }
+  .status.target-achieved {
+    color: white;
+    border: 1px solid transparent;
+    background-color: #000000;
+    background: #000000; }
+    .status.target-achieved .status-inner {
+      background-color: #000000;
+      background: #000000; }
+  .status.limited-progress {
+    color: #0b0c0c;
+    border: 1px solid #0b0c0c;
+    background-color: #CFCFCF;
+    background: #CFCFCF; }
+    .status.limited-progress .status-inner {
+      background-color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.9); }
+  .status.moderate-progress {
+    color: #0b0c0c;
+    border: 1px solid transparent;
+    background-color: #8A8A8A;
+    background: #8A8A8A; }
+    .status.moderate-progress .status-inner {
+      background-color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.9); }
+  .status.substantial-progress {
+    color: #0b0c0c;
+    border: 1px solid #0b0c0c;
+    background-color: #555555;
+    background: #555555; }
+    .status.substantial-progress .status-inner {
+      background-color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.9); }
+  .status.deterioration {
+    color: #0b0c0c;
+    border: 1px solid #0b0c0c;
+    background-color: repeating-linear-gradient(135deg, #757575 0, white 10px, #757575 10px, white 20px);
+    background: repeating-linear-gradient(135deg, #757575 0, white 10px, #757575 10px, white 20px); }
+    .status.deterioration .status-inner {
+      background-color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.9); }
+  .status.not-available {
+    color: #0b0c0c;
+    border: 1px solid #0b0c0c;
+    background-color: #FFFFFF;
+    background: #FFFFFF; }
+    .status.not-available .status-inner {
+      background-color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.9); }
 
 body.contrast-high .status.complete {
   border: 1px solid transparent;
@@ -1539,6 +1587,60 @@ body.contrast-high .status.notapplicable {
   body.contrast-high .status.notapplicable .status-inner {
     background-color: rgba(255, 255, 255, 0.8) !important;
     background: rgba(255, 255, 255, 0.8) !important;
+    color: black !important; }
+body.contrast-high .status.target-achieved {
+  border: 1px solid transparent;
+  background-color: #000000;
+  background: #000000;
+  color: white !important; }
+  body.contrast-high .status.target-achieved .status-inner {
+    background-color: #000000 !important;
+    background: #000000 !important;
+    color: white !important; }
+body.contrast-high .status.limited-progress {
+  border: 1px solid transparent;
+  background-color: #CFCFCF;
+  background: #CFCFCF;
+  color: black; }
+  body.contrast-high .status.limited-progress .status-inner {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: black; }
+body.contrast-high .status.moderate-progress {
+  border: 1px solid transparent;
+  background-color: #8A8A8A;
+  background: #8A8A8A;
+  color: black; }
+  body.contrast-high .status.moderate-progress .status-inner {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: black; }
+body.contrast-high .status.substantial-progress {
+  border: 1px solid transparent;
+  background-color: #555555;
+  background: #555555;
+  color: black; }
+  body.contrast-high .status.substantial-progress .status-inner {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: black; }
+body.contrast-high .status.deterioration {
+  border: 1px solid white;
+  background-color: repeating-linear-gradient(135deg, #757575 0, white 10px, #757575 10px, white 20px);
+  background: repeating-linear-gradient(135deg, #757575 0, white 10px, #757575 10px, white 20px);
+  color: black !important; }
+  body.contrast-high .status.deterioration .status-inner {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: black !important; }
+body.contrast-high .status.not-available {
+  border: 1px solid white;
+  background-color: #FFFFFF;
+  background: #FFFFFF;
+  color: black !important; }
+  body.contrast-high .status.not-available .status-inner {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    background: rgba(255, 255, 255, 0.9) !important;
     color: black !important; }
 
 .previous-next-links .btn-primary {
@@ -1818,6 +1920,54 @@ body.contrast-high .indicator.goal-banner .goal-tiles img {
       .layout-reportingstatus #main-content .statuses > div .status.notapplicable .status-inner {
         background-color: rgba(255, 255, 255, 0.8);
         background: rgba(255, 255, 255, 0.8); }
+    .layout-reportingstatus #main-content .statuses > div .status.target-achieved {
+      color: white;
+      border: 1px solid transparent;
+      background-color: #000000;
+      background: #000000; }
+      .layout-reportingstatus #main-content .statuses > div .status.target-achieved .status-inner {
+        background-color: #000000;
+        background: #000000; }
+    .layout-reportingstatus #main-content .statuses > div .status.limited-progress {
+      color: #0b0c0c;
+      border: 1px solid #0b0c0c;
+      background-color: #CFCFCF;
+      background: #CFCFCF; }
+      .layout-reportingstatus #main-content .statuses > div .status.limited-progress .status-inner {
+        background-color: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.9); }
+    .layout-reportingstatus #main-content .statuses > div .status.moderate-progress {
+      color: #0b0c0c;
+      border: 1px solid transparent;
+      background-color: #8A8A8A;
+      background: #8A8A8A; }
+      .layout-reportingstatus #main-content .statuses > div .status.moderate-progress .status-inner {
+        background-color: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.9); }
+    .layout-reportingstatus #main-content .statuses > div .status.substantial-progress {
+      color: #0b0c0c;
+      border: 1px solid #0b0c0c;
+      background-color: #555555;
+      background: #555555; }
+      .layout-reportingstatus #main-content .statuses > div .status.substantial-progress .status-inner {
+        background-color: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.9); }
+    .layout-reportingstatus #main-content .statuses > div .status.deterioration {
+      color: #0b0c0c;
+      border: 1px solid #0b0c0c;
+      background-color: repeating-linear-gradient(135deg, #757575 0, white 10px, #757575 10px, white 20px);
+      background: repeating-linear-gradient(135deg, #757575 0, white 10px, #757575 10px, white 20px); }
+      .layout-reportingstatus #main-content .statuses > div .status.deterioration .status-inner {
+        background-color: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.9); }
+    .layout-reportingstatus #main-content .statuses > div .status.not-available {
+      color: #0b0c0c;
+      border: 1px solid #0b0c0c;
+      background-color: #FFFFFF;
+      background: #FFFFFF; }
+      .layout-reportingstatus #main-content .statuses > div .status.not-available .status-inner {
+        background-color: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.9); }
     .layout-reportingstatus #main-content .statuses > div .status .status-inner {
       padding: 0 2px;
       border-radius: 5px; }
@@ -1849,6 +1999,24 @@ body.contrast-high .indicator.goal-banner .goal-tiles img {
   .layout-reportingstatus #main-content .goal-stats .complete {
     background-color: #2B2B2B;
     background: #2B2B2B; }
+  .layout-reportingstatus #main-content .goal-stats .not-available {
+    background-color: #FFFFFF;
+    background: #FFFFFF; }
+  .layout-reportingstatus #main-content .goal-stats .deterioration {
+    background-color: repeating-linear-gradient(135deg, #757575 0, white 10px, #757575 10px, white 20px);
+    background: repeating-linear-gradient(135deg, #757575 0, white 10px, #757575 10px, white 20px); }
+  .layout-reportingstatus #main-content .goal-stats .limited-progress {
+    background-color: #CFCFCF;
+    background: #CFCFCF; }
+  .layout-reportingstatus #main-content .goal-stats .moderate-progress {
+    background-color: #8A8A8A;
+    background: #8A8A8A; }
+  .layout-reportingstatus #main-content .goal-stats .substantial-progress {
+    background-color: #555555;
+    background: #555555; }
+  .layout-reportingstatus #main-content .goal-stats .target-achieved {
+    background-color: #000000;
+    background: #000000; }
 .layout-reportingstatus #main-content .divider {
   height: 15px; }
 .layout-reportingstatus #main-content .goal {
@@ -1923,6 +2091,24 @@ body.contrast-high .indicator.goal-banner .goal-tiles img {
   .layout-reportingstatus.contrast-high #main-content .goal-stats .complete {
     background-color: white;
     background: white; }
+  .layout-reportingstatus.contrast-high #main-content .goal-stats .not-available {
+    background-color: #FFFFFF;
+    background: #FFFFFF; }
+  .layout-reportingstatus.contrast-high #main-content .goal-stats .deterioration {
+    background-color: repeating-linear-gradient(135deg, #757575 0, white 10px, #757575 10px, white 20px);
+    background: repeating-linear-gradient(135deg, #757575 0, white 10px, #757575 10px, white 20px); }
+  .layout-reportingstatus.contrast-high #main-content .goal-stats .limited-progress {
+    background-color: #CFCFCF;
+    background: #CFCFCF; }
+  .layout-reportingstatus.contrast-high #main-content .goal-stats .moderate-progress {
+    background-color: #8A8A8A;
+    background: #8A8A8A; }
+  .layout-reportingstatus.contrast-high #main-content .goal-stats .substantial-progress {
+    background-color: #555555;
+    background: #555555; }
+  .layout-reportingstatus.contrast-high #main-content .goal-stats .target-achieved {
+    background-color: #000000;
+    background: #000000; }
 .layout-reportingstatus.contrast-high #main-content .statuses strong {
   color: white; }
 .layout-reportingstatus.contrast-high #main-content .statuses .value {
@@ -1964,6 +2150,60 @@ body.contrast-high .indicator.goal-banner .goal-tiles img {
     .layout-reportingstatus.contrast-high #main-content .statuses .status.notapplicable .status-inner {
       background-color: rgba(255, 255, 255, 0.8) !important;
       background: rgba(255, 255, 255, 0.8) !important;
+      color: black !important; }
+  .layout-reportingstatus.contrast-high #main-content .statuses .status.target-achieved {
+    border: 1px solid transparent;
+    background-color: #000000;
+    background: #000000;
+    color: white !important; }
+    .layout-reportingstatus.contrast-high #main-content .statuses .status.target-achieved .status-inner {
+      background-color: #000000 !important;
+      background: #000000 !important;
+      color: white !important; }
+  .layout-reportingstatus.contrast-high #main-content .statuses .status.limited-progress {
+    border: 1px solid transparent;
+    background-color: #CFCFCF;
+    background: #CFCFCF;
+    color: black; }
+    .layout-reportingstatus.contrast-high #main-content .statuses .status.limited-progress .status-inner {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+      color: black; }
+  .layout-reportingstatus.contrast-high #main-content .statuses .status.moderate-progress {
+    border: 1px solid transparent;
+    background-color: #8A8A8A;
+    background: #8A8A8A;
+    color: black; }
+    .layout-reportingstatus.contrast-high #main-content .statuses .status.moderate-progress .status-inner {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+      color: black; }
+  .layout-reportingstatus.contrast-high #main-content .statuses .status.substantial-progress {
+    border: 1px solid transparent;
+    background-color: #555555;
+    background: #555555;
+    color: black; }
+    .layout-reportingstatus.contrast-high #main-content .statuses .status.substantial-progress .status-inner {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+      color: black; }
+  .layout-reportingstatus.contrast-high #main-content .statuses .status.deterioration {
+    border: 1px solid white;
+    background-color: repeating-linear-gradient(135deg, #757575 0, white 10px, #757575 10px, white 20px);
+    background: repeating-linear-gradient(135deg, #757575 0, white 10px, #757575 10px, white 20px);
+    color: black !important; }
+    .layout-reportingstatus.contrast-high #main-content .statuses .status.deterioration .status-inner {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      background: rgba(255, 255, 255, 0.9) !important;
+      color: black !important; }
+  .layout-reportingstatus.contrast-high #main-content .statuses .status.not-available {
+    border: 1px solid white;
+    background-color: #FFFFFF;
+    background: #FFFFFF;
+    color: black !important; }
+    .layout-reportingstatus.contrast-high #main-content .statuses .status.not-available .status-inner {
+      background-color: rgba(255, 255, 255, 0.9) !important;
+      background: rgba(255, 255, 255, 0.9) !important;
       color: black !important; }
   .layout-reportingstatus.contrast-high #main-content .statuses .status.notstarted {
     border: 1px solid white !important; }
