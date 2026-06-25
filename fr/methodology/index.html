@@ -139,7 +139,7 @@ var translations = {
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link res="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" crossorigin="">
-        <link rel="stylesheet" href="/assets/css/style.css?v=20260625133001">
+        <link rel="stylesheet" href="/assets/css/style.css?v=20260625175147">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
           integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
           crossorigin=""/>
@@ -335,7 +335,7 @@ data-event-label="high"
 <h3 id="méthodologie">Méthodologie</h3>
 <p>La mesure de progrès consiste en une mesure de la croissance observée comparée à une évaluation de la proximité à atteindre la cible dans les conditions actuelles. Dans les situations où aucune cible quantitative n’est fournie, la série chronologique est évaluée sur la tendance apparente des données.</p>
 
-<p>Compte tenu du nombre limité de points de données dans chaque série chronologique et de la volonté de garder une méthodologie simple et transparente, la méthodologie optimale pour mesurer le progrès a été inspirée par la méthodologie de progrès utilisée par Eurostat.<sup id="fnref:1"><a href="#fn:1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p>
+<p>Compte tenu du nombre limité de points de données dans chaque série chronologique et de la volonté de garder une méthodologie simple et transparente, la méthodologie optimale pour mesurer le progrès a été inspirée par la méthodologie de progrès utilisée par Eurostat.<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup></p>
 
 <p>Le progrès est mesuré en utilisant la croissance sur la période observée et est calculé par un taux de croissance annuel composé,</p>
 
@@ -360,7 +360,7 @@ data-event-label="high"
 
 <p>Cette formule représente le ratio entre le taux de croissance observé et le taux de croissance requis pour atteindre la cible en tenant compte de certains cas particuliers où la direction vers la cible diffère de la direction de progrès désirée (p. ex. certains cas où la valeur de base atteint la cible).</p>
 
-<p>Le résultat est comparé à un ensemble de seuils<sup id="fnref:2"><a href="#fn:2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> et se voit attribuer une catégorie de progrès comme décrit dans le tableau ci-dessous :</p>
+<p>Le résultat est comparé à un ensemble de seuils<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup> et se voit attribuer une catégorie de progrès comme décrit dans le tableau ci-dessous :</p>
 
 <style type="text/css">
 .tg  {border-collapse:collapse;border-spacing:0;}
@@ -467,7 +467,7 @@ data-event-label="high"
 
 <p>où le premier cas (0 ≤ y<sub>0</sub> &lt; <em>y</em><sub>lim</sub>) concerne les situations avec une limite maximale et les deux cas suivants concernent les situations avec une limite minimale. Le facteur d’échelle, <em>C</em>, est une variable comprise entre 0 et 1 qui réduit les seuils de progrès selon la proximité entre la valeur de base et la limite. Si la valeur de base est très proche de la limite, <em>C</em> s’approchera à zéro et réduira fortement les seuils afin de permettre une gamme plus réaliste d’estimations de progrès. Autrement, si la valeur de base est éloignée de la limite, <em>C</em> s’approchera à 1 et aura un impact minime sur l’estimation finale du progrès pour l’indicateur.</p>
 
-<p>Le facteur d’échelle défini ci-dessus a été choisi afin de réduire les seuils de progrès d’une manière optimale qui (1) assure qu’il soit possible d’atteindre la catégorie de progrès « Sur la bonne voie » sans surpasser la limite au cours des 15 premières années,<sup id="fnref:3"><a href="#fn:3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup> (2) assure que le facteur de réduction soit identique à des distances relatives égales d’une limite minimale ou maximale, et (3) entraîne un impact minimal sur les seuils utilisés à des valeurs intermédiaires et à des valeurs éloignées de la limite.<sup id="fnref:4"><a href="#fn:4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup></p>
+<p>Le facteur d’échelle défini ci-dessus a été choisi afin de réduire les seuils de progrès d’une manière optimale qui (1) assure qu’il soit possible d’atteindre la catégorie de progrès « Sur la bonne voie » sans surpasser la limite au cours des 15 premières années,<sup id="fnref:3"><a href="#fn:3" class="footnote">3</a></sup> (2) assure que le facteur de réduction soit identique à des distances relatives égales d’une limite minimale ou maximale, et (3) entraîne un impact minimal sur les seuils utilisés à des valeurs intermédiaires et à des valeurs éloignées de la limite.<sup id="fnref:4"><a href="#fn:4" class="footnote">4</a></sup></p>
 
 <p>Seule une limite qui affecte le progrès dans la direction désirée est considérée. Par exemple, une limite maximale n’est pas considérée pour les indicateurs dont le sens de progression désiré est négatif. De même, le facteur d’échelle n’est pas appliqué aux seuils inférieurs ou égales à zéro (seuils ≤ 0 %) qui représentent un mouvement dans la direction inverse à la direction de progrès désirée.</p>
 
@@ -1907,19 +1907,19 @@ data-event-label="high"
 
 <h2 id="notes">Notes</h2>
 
-<div class="footnotes" role="doc-endnotes">
+<div class="footnotes">
   <ol>
     <li id="fn:1">
-      <p>Pour une description détaillée de la méthodologie, veuillez vous référer à Eurostat (2021). <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Pour une description détaillée de la méthodologie, veuillez vous référer à Eurostat (2021). <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:2">
-      <p>Tous les seuils sont des normes de la communauté internationale. Après évaluation, il a été constaté qu’ils sont également applicables dans le contexte canadien. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Tous les seuils sont des normes de la communauté internationale. Après évaluation, il a été constaté qu’ils sont également applicables dans le contexte canadien. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:3">
-      <p>La période de validité prévue pour la méthodologie est de 15 ans (généralement de 2015 à 2030). <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>La période de validité prévue pour la méthodologie est de 15 ans (généralement de 2015 à 2030). <a href="#fnref:3" class="reversefootnote">&#8617;</a></p>
     </li>
     <li id="fn:4">
-      <p><a href="mailto:statcan.sdg-odd.statcan@statcan.gc.ca">Contactez-nous</a> pour plus de détails sur différents aspects de la méthodologie, tels que le facteur d’échelle. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p><a href="mailto:statcan.sdg-odd.statcan@statcan.gc.ca">Contactez-nous</a> pour plus de détails sur différents aspects de la méthodologie, tels que le facteur d’échelle. <a href="#fnref:4" class="reversefootnote">&#8617;</a></p>
     </li>
   </ol>
 </div>
@@ -2018,12 +2018,12 @@ data-event-label="high"
 <script>translations['search'] = translations['search'] || {};
     translations['search']['search'] = 'Chercher';</script>
 
-<script src='/assets/js/sdg.js?v=20260625133001'></script>
+<script src='/assets/js/sdg.js?v=20260625175147'></script>
 
 
     
     
-    <script src="/assets/js/custom.js?v=20260625133001"></script><script>
+    <script src="/assets/js/custom.js?v=20260625175147"></script><script>
     new indicatorInit();
     new accessibilitySwitcher();
 </script>
